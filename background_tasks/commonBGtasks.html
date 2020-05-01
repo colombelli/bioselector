@@ -1,13 +1,13 @@
 <script>
 
+    var nodeConsole = require('console');
+    var myConsole = new nodeConsole.Console(process.stdout, process.stderr);
+
     const { PythonShell } = require('python-shell');
     const { ipcRenderer } = require('electron');
     const path = require('path');
-    
-    var remote = require('electron').remote;   
-    const bgTasks = remote.getGlobal('sharedObj').bgTasks;
 
-    function setupBGtasks(bgTask){
+    function setupBGtask(bgTask){
 
         ipcRenderer.on(bgTask.concat('START'), (event, args) => {
 
@@ -23,8 +23,11 @@
         });
 
         ipcRenderer.send(bgTask.concat('READY'));
-    } 
+    }
 
-    bgTasks.array.forEach(setupBGtasks);
+    let task = window.process.argv.slice(-1)[0]
+    myConsole.log(task)
+    setupBGtask(task)
+    myConsole.log("it is working")
 
 </script>

@@ -2,8 +2,7 @@ const { ipcMain, BrowserWindow } = require('electron');
 const path = require('path');
 const url = require('url');
 
-var remote = require('electron').remote;
-const bgTasks = remote.getGlobal('commonBGtasks')
+const bgTasks = ['loadDataset', 'deleteDataset']
 
 
 function createCommonIPCmain(bgTask) {
@@ -28,7 +27,8 @@ function createCommonIPCmain(bgTask) {
 		sender = event.sender
 
 		const backgroundFileUrl = url.format({
-			pathname: path.join(__dirname, `../background_tasks/commonBGtasks.html`),
+			pathname: path.join(__dirname, `../background_tasks/
+				commonBGtasks.html`),
 			protocol: 'file:',
 			slashes: true,
 		});
@@ -36,10 +36,11 @@ function createCommonIPCmain(bgTask) {
 			show: false,
 			webPreferences: {
 				nodeIntegration: true,
+				additionalArguments: [bgTask]
 			},
 		});
 		hiddenWindow.loadURL(backgroundFileUrl);
-
+		
 		hiddenWindow.webContents.openDevTools();
 
 		hiddenWindow.on('closed', () => {

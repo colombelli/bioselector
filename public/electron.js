@@ -48,10 +48,6 @@ app.on('activate', () => {
 });
 
 
-// Array that'll inform all background task which
-// have the same ipc communication logic
-global.sharedObj = {commonBGtasks: ['loadDataset', 'deleteDataset']};
-
 require('../main-process/windowMangement')
 require('../main-process/commonMain')
 

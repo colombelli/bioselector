@@ -39,8 +39,7 @@ export class Datasets extends Component {
             data: 4
         });
 
-        ipcRenderer.on('deleDatasetBG_MESSAGE', (event, args) => {
-            
+        ipcRenderer.on('deleteDatasetBG_MESSAGE', (event, args) => {
             console.log("received a message from background")
             console.log(args)
         });
