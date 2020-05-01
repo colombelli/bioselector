@@ -1,0 +1,60 @@
+%card-button{
+    hr{
+      margin: 5px 15px;
+    }
+  }
+  
+  
+  .card-button{
+      cursor: pointer;
+      color: white;
+      background-color: $primary-color;
+
+      .card-body{
+          padding: 15px 15px 0px;
+  
+          .numbers{
+            text-align: center;
+            padding-top: 10px;
+            font-size: 2em;
+  
+              p{
+                  margin-bottom: 0;
+                  color: white;
+              }
+              .card-category {
+                color: white;
+                font-size: 16px;
+                line-height: 1.4em;
+              }
+          }
+      }
+      .card-footer{
+          padding: 0px 15px 15px;
+  
+          .stats{
+            color: white;
+          }
+  
+          hr{
+            margin-top: 10px;
+            margin-bottom: 15px;
+          }
+      }
+      .icon-big {
+          font-size: 3em;
+          min-height: 64px;
+  
+          i{  
+              line-height: 59px;
+          }
+        }
+  }
+
+  .card-button:hover {
+    filter: brightness(110%);  
+  }
+  .card-footer:hover {
+    filter: brightness(80%);  
+  }
+  

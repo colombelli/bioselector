@@ -1,0 +1,58 @@
+{
+  "name": "electron-react-boilerplate",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "4.3.1",
+    "chart.js": "2.8.0",
+    "electron-load-balancer": "^2.0.0",
+    "history": "4.9.0",
+    "node-sass": "4.12.0",
+    "perfect-scrollbar": "1.4.0",
+    "python-shell": "^1.0.8",
+    "react": "^16.10.2",
+    "react-chartjs-2": "2.7.6",
+    "react-dom": "^16.10.2",
+    "react-google-maps": "9.4.5",
+    "react-notification-alert": "0.0.12",
+    "react-router": "5.0.0",
+    "react-router-dom": "5.0.0",
+    "react-scripts": "3.2.0",
+    "reactstrap": "8.0.0"
+  },
+  "scripts": {
+    "react-start": "BROWSER=NONE react-scripts start",
+    "electron-start": "DEV=1 electron .",
+    "start": "concurrently 'npm run react-start' 'wait-on http://localhost:3000/ && npm run electron-start'",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
+    "compile-sass": "node-sass src/assets/scss/paper-dashboard.scss src/assets/css/paper-dashboard.css",
+    "minify-sass": "node-sass src/assets/scss/paper-dashboard.scss src/assets/css/paper-dashboard.min.css --output-style compressed",
+    "map-sass": "node-sass src/assets/scss/paper-dashboard.scss src/assets/css/paper-dashboard.css --source-map true"
+  },
+  "main": "public/electron.js",
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not ie <= 11",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "concurrently": "^5.0.0",
+    "electron": "^6.0.11",
+    "wait-on": "^3.3.0"
+  }
+}

@@ -1,0 +1,30 @@
+<script>
+
+    const { PythonShell } = require('python-shell');
+    const { ipcRenderer } = require('electron');
+    const path = require('path');
+    
+    var remote = require('electron').remote;   
+    const bgTasks = remote.getGlobal('sharedObj').bgTasks;
+
+    function setupBGtasks(bgTask){
+
+        ipcRenderer.on(bgTask.concat('START'), (event, args) => {
+
+            const { data } = args;
+            let pyshell = new PythonShell(path.join(__dirname, `/../scripts/${bgTask}.py`), {
+                pythonPath: 'python3',
+                args: [data]
+            });
+
+            pyshell.on('message', function(results) {
+                ipcRenderer.send(bgTask.concat('MESSAGE'), { message: results });
+            });
+        });
+
+        ipcRenderer.send(bgTask.concat('READY'));
+    } 
+
+    bgTasks.array.forEach(setupBGtasks);
+
+</script>
