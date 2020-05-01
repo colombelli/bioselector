@@ -10,7 +10,7 @@ function createCommonIPCmain(bgTask) {
 	// temporary variable to store data while background
 	// process is not ready to start processing
 	let cache = {
-		data: undefined,
+		args: undefined,
 	};
 
 	// variable that will grab main window from event sender prop
@@ -47,7 +47,16 @@ function createCommonIPCmain(bgTask) {
 			hiddenWindow = null;
 		});
 
-		cache.data = args.number;
+		ipcMain.once(bgTask.concat('FINISHED'), (event, args) => {
+			hiddenWindow.close()
+		});
+
+		ipcMain.once(bgTask.concat('ERR'), (event, args) => {
+			//handle error
+			hiddenWindow.close()
+		});
+
+		cache.args = args;
 	});
 
 
@@ -61,10 +70,13 @@ function createCommonIPCmain(bgTask) {
 	// When background is ready to process, this listener will tell 
 	// it to start the background processing
 	ipcMain.on(bgTask.concat('READY'), (event, args) => {
-		event.reply(bgTask.concat('START'), {
-			data: cache.data,
-		});
+		event.reply(bgTask.concat('START'),  cache.args);
 	});
 }
 
 bgTasks.forEach(createCommonIPCmain)
+
+ipcMain.on('count-win', (event, args) => {
+	let count = BrowserWindow.getAllWindows().length
+	event.sender.send('count-win', count)
+});

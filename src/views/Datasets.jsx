@@ -13,36 +13,48 @@ import {
 
 export class Datasets extends Component {
     
-
-    addDataset = () => {
-
-        console.log('trying...')
-        console.log('i swear...')
-
-        ipcRenderer.send('loadDataset', {
-            data: 5
-        });
-
+    componentDidMount()
+    {
+        //Set listeners
         ipcRenderer.on('loadDatasetBG_MESSAGE', (event, args) => {
             console.log('a message from bg:')
             console.log(args)
         });
-    }
-    
 
-    deleteDataset = () => {
-
-        console.log('yaa')
-        console.log('yoo')
-
-        ipcRenderer.send('deleteDataset', {
-            data: 4
-        });
 
         ipcRenderer.on('deleteDatasetBG_MESSAGE', (event, args) => {
             console.log("received a message from background")
             console.log(args)
         });
+
+        ipcRenderer.on('count-win', (event, args) => {
+            console.log("windows count")
+            console.log(args)
+        });
+    }
+
+    addDataset = () => {
+
+        console.log('add clicked...');
+        const loadPath = '/home/blabla/baa.txt';
+
+        ipcRenderer.send('loadDataset', loadPath);
+    }
+    
+
+    deleteDataset = () => {
+
+        console.log('deleting')
+        const datasetID = 'saf132fnj'
+        ipcRenderer.send('deleteDataset', datasetID);
+
+
+    }
+
+    countWindows = () => {
+
+        ipcRenderer.send('count-win', 'a')
+
 
     }
 
@@ -77,7 +89,7 @@ export class Datasets extends Component {
                         </div>
                     </Col>
                     <Col>
-                        <div onClick={() => alert("ye")}>
+                        <div onClick={this.countWindows}>
                         <Card className="card-button add">
                         <CardBody>
                         <Row>
