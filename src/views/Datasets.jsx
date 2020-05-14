@@ -8,6 +8,8 @@ import {
     Table,
     Row,
     Col,
+    ListGroup,
+    ListGroupItem
   } from "reactstrap";
   import { v4 as uuidv4 } from 'uuid';
 
@@ -44,11 +46,6 @@ export class Datasets extends Component {
             this.setState({datasets: updated_datasets});
             console.log(this.state.datasets)
             
-        });
-
-        ipcRenderer.on('loadDatasetBG_MESSAGE', (event, args) => {
-            console.log('a message from bg:')
-            console.log(args)
         });
 
 
@@ -186,14 +183,14 @@ export class Datasets extends Component {
             <Col md="12">
               <Card>
                 <CardHeader>
-                  <CardTitle tag="h4">Datasets to select the genes from</CardTitle>
+                  <CardTitle tag="h4">Datasets to select from</CardTitle>
                 </CardHeader>
                 <CardBody>
                   <Table striped hover>
                     <thead className="text-success">
                       <tr>
-                        <th>Title</th>
-                        <th className="text-right">Path</th>
+                        <th>TITLE</th>
+                        <th className="text-right">PATH</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -209,7 +206,7 @@ export class Datasets extends Component {
           <Col md="12">
             <Card>
               <CardHeader>
-                <CardTitle tag="h4">Datasets format</CardTitle>
+                <CardTitle tag="h4">Expected format</CardTitle>
               </CardHeader>
               <CardBody>
                 <Table striped>
@@ -298,6 +295,15 @@ export class Datasets extends Component {
                     </tr>
                   </tbody>
                 </Table>
+
+                <ListGroup>
+                    <ListGroupItem color="success">* Patients in the rows</ListGroupItem>
+                    <ListGroupItem color="success">* Genes in the columns</ListGroupItem>
+                    <ListGroupItem color="success">* There must be a column named "class" in the last position</ListGroupItem>
+                    <ListGroupItem color="success">* class column must have only 0 or 1 vlaues</ListGroupItem>
+                    <ListGroupItem color="success">* A log-transformation is recommended before running any experiment</ListGroupItem>
+                </ListGroup>
+
               </CardBody>
             </Card>
           </Col>
