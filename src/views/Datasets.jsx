@@ -9,15 +9,43 @@ import {
     Row,
     Col,
   } from "reactstrap";
+  import { v4 as uuidv4 } from 'uuid';
 
   const electron = window.require('electron');
   const { ipcRenderer } = electron;
+  
+  
 
 export class Datasets extends Component {
     
+    constructor(props){
+        super(props)
+        this.state = {
+            datasets: [
+                
+            ]
+        }
+    }
+
     componentDidMount()
     {
         //Set listeners
+        ipcRenderer.on('LOADED_FILE', (event, dsPaths) => {
+
+            
+            let updated_datasets = this.state.datasets;
+            dsPaths.map((dsPath, index) => {
+                updated_datasets.push({
+                    id: uuidv4(), 
+                    title: ipcRenderer.sendSync('ASK_DATASET_TITLE', dsPath), 
+                    path: dsPath})
+            });
+
+            this.setState({datasets: updated_datasets});
+            console.log(this.state.datasets)
+            
+        });
+
         ipcRenderer.on('loadDatasetBG_MESSAGE', (event, args) => {
             console.log('a message from bg:')
             console.log(args)
@@ -35,12 +63,23 @@ export class Datasets extends Component {
         });
     }
 
+
+    renderDatasetsTable() {
+        return this.state.datasets.map((dataset, index) => {
+           const { id, title, path } = dataset
+           return (
+                <tr key={id}>
+                    <td>{title}</td>
+                    <td className="text-right">{path}</td>
+                </tr>
+           )
+        })
+     }
+
+
+
     addDataset = () => {
-
-        console.log('add clicked...');
-        const loadPath = '/home/blabla/baa.txt';
-
-        ipcRenderer.send('loadDataset', loadPath);
+        ipcRenderer.send('BROWSE_FILE');
     }
     
 
@@ -150,7 +189,7 @@ export class Datasets extends Component {
                   <CardTitle tag="h4">Datasets to select the genes from</CardTitle>
                 </CardHeader>
                 <CardBody>
-                  <Table responsive>
+                  <Table striped hover>
                     <thead className="text-success">
                       <tr>
                         <th>Title</th>
@@ -158,10 +197,7 @@ export class Datasets extends Component {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>None</td>
-                        <td className="text-right">None</td>
-                      </tr>
+                        {this.renderDatasetsTable()}
                     </tbody>
                   </Table>
                 </CardBody>
@@ -176,7 +212,7 @@ export class Datasets extends Component {
                 <CardTitle tag="h4">Datasets format</CardTitle>
               </CardHeader>
               <CardBody>
-                <Table responsive>
+                <Table striped>
                   <thead className="text-success">
                     <tr>
                       <th> </th>
