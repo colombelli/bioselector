@@ -23,9 +23,10 @@ export class Datasets extends Component {
     constructor(props){
         super(props)
         this.state = {
-            datasets: [
-                
-            ]
+            datasets: [],
+            removable: false,
+            changeable: false,
+            cursor: "auto"
         }
     }
 
@@ -44,7 +45,6 @@ export class Datasets extends Component {
             });
 
             this.setState({datasets: updated_datasets});
-            console.log(this.state.datasets)
             
         });
 
@@ -60,12 +60,38 @@ export class Datasets extends Component {
         });
     }
 
+    changeOrRemoveRow(id) {
+        
+        let datasets = this.state.datasets
+
+        if (this.state.changeable) {
+            
+            return
+
+        } else if (this.state.removable) {
+            
+            let updated_datasets = []
+            datasets.map((dataset, index) => {
+                if(dataset.id != id){
+                    updated_datasets.push(dataset)
+                }
+            });
+
+            this.setState({
+                datasets: updated_datasets
+            })
+
+        } else {
+            return
+        }
+    }
 
     renderDatasetsTable() {
         return this.state.datasets.map((dataset, index) => {
            const { id, title, path } = dataset
            return (
-                <tr key={id}>
+                <tr key={id} id={id} onClick={() => this.changeOrRemoveRow(id)}
+                style={{cursor: this.state.cursor}}>
                     <td>{title}</td>
                     <td className="text-right">{path}</td>
                 </tr>
@@ -82,18 +108,43 @@ export class Datasets extends Component {
 
     deleteDataset = () => {
 
+        let updated_cursor=""
+        if(this.state.removable){
+            updated_cursor = "auto"
+        }else{
+            updated_cursor = "pointer"
+        }
+
+        this.setState({
+            removable : !this.state.removable,
+            changeable: false,
+            cursor: updated_cursor
+        })
+
+        /*
         console.log('deleting')
         const datasetID = 'saf132fnj'
         ipcRenderer.send('deleteDataset', datasetID);
-
+        */
 
     }
 
-    countWindows = () => {
+    changeDataset = () => {
 
-        ipcRenderer.send('count-win', 'a')
+        let updated_cursor=""
+        if(this.state.changeable){
+            updated_cursor = "auto"
+        }else{
+            updated_cursor = "pointer"
+        }
 
+        this.setState({
+            removable : false,
+            changeable: !this.state.changeable,
+            cursor: updated_cursor
+        })
 
+        //ipcRenderer.send('count-win', 'a')
     }
 
     render() {
@@ -128,7 +179,7 @@ export class Datasets extends Component {
                         </div>
                     </Col>
                     <Col>
-                        <div onClick={this.countWindows}>
+                        <div onClick={this.changeDataset}>
                         <Card className="card-button add">
                         <CardBody>
                         <Row>
@@ -186,7 +237,9 @@ export class Datasets extends Component {
                   <CardTitle tag="h4">Datasets to select from</CardTitle>
                 </CardHeader>
                 <CardBody>
-                  <Table striped hover>
+                  <Table 
+                  hover={this.state.removable || this.state.changeable} 
+                  bordered={this.state.removable || this.state.changeable}>
                     <thead className="text-success">
                       <tr>
                         <th>TITLE</th>
