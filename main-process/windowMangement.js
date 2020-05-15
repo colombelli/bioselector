@@ -8,7 +8,7 @@ ipcMain.on('MINIMIZE_WINDOW', (event, args) => {
 });
 
 
-ipcMain.on('BROWSE_FILE', (event, args) => {
+ipcMain.on('BROWSE_FILES', (event, args) => {
 
     dialog.showOpenDialog(
         {   
@@ -24,6 +24,28 @@ ipcMain.on('BROWSE_FILE', (event, args) => {
                 return;
             }
             event.sender.send('LOADED_FILE', filename);
+        }
+    )
+});
+
+
+
+ipcMain.on('BROWSE_FILE', (event, args) => {
+
+    dialog.showOpenDialog(
+        {   
+            title: "Select Dataset (csv or rds files)",
+            properties: ['openFile'],
+            filters: [
+                { name: 'RDS object', extensions: ['rds'] },
+                { name: 'CSV table', extensions: ['csv'] }
+            ] 
+        },
+        (filename) => {
+            if (filename === undefined) {
+                return;
+            }
+            event.returnValue = filename
         }
     )
 });

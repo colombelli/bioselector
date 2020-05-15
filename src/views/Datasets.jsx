@@ -60,19 +60,15 @@ export class Datasets extends Component {
         });
     }
 
-    changeOrRemoveRow(id) {
+    removeRow(id) {
         
         let datasets = this.state.datasets
 
-        if (this.state.changeable) {
-            
-            return
-
-        } else if (this.state.removable) {
+        if (this.state.removable) {
             
             let updated_datasets = []
             datasets.map((dataset, index) => {
-                if(dataset.id != id){
+                if(dataset.id !== id){
                     updated_datasets.push(dataset)
                 }
             });
@@ -86,14 +82,60 @@ export class Datasets extends Component {
         }
     }
 
+    changeTitle(id) {
+
+      if (this.state.changeable) {
+
+        let datasets = this.state.datasets
+        let updated_datasets = datasets.map((dataset, index) => {
+                if(dataset.id === id){
+                  let title = ipcRenderer.sendSync('ASK_DATASET_TITLE', dataset.path)
+                  if(title !== null){dataset.title = title}
+                }
+                return dataset
+            });
+
+        this.setState({
+          datasets: updated_datasets
+        })
+
+      } else {
+        return
+      }
+    }
+
+
+    changePath(id) {
+
+      if (this.state.changeable) {
+
+        let datasets = this.state.datasets
+        let updated_datasets = datasets.map((dataset, index) => {
+                if(dataset.id === id){
+                  let path = ipcRenderer.sendSync('BROWSE_FILE', dataset.path)
+                  if(path !== null){dataset.path = path}
+                }
+                return dataset
+            });
+
+        this.setState({
+          datasets: updated_datasets
+        })
+
+      } else {
+        return
+      }
+    }
+
+
     renderDatasetsTable() {
         return this.state.datasets.map((dataset, index) => {
            const { id, title, path } = dataset
            return (
-                <tr key={id} id={id} onClick={() => this.changeOrRemoveRow(id)}
+                <tr key={id} id={id} onClick={() => this.removeRow(id)}
                 style={{cursor: this.state.cursor}}>
-                    <td>{title}</td>
-                    <td className="text-right">{path}</td>
+                    <td onClick={() => this.changeTitle(id)}>{title}</td>
+                    <td className="text-right" onClick={() => this.changePath(id)}>{path}</td>
                 </tr>
            )
         })
@@ -102,14 +144,15 @@ export class Datasets extends Component {
 
 
     addDataset = () => {
-        ipcRenderer.send('BROWSE_FILE');
+        ipcRenderer.send('BROWSE_FILES');
     }
     
 
     deleteDataset = () => {
 
-        let updated_cursor=""
-        if(this.state.removable){
+        let updated_cursor
+
+        if(this.state.removable){  // then removable will turn to false later
             updated_cursor = "auto"
         }else{
             updated_cursor = "pointer"
@@ -131,7 +174,8 @@ export class Datasets extends Component {
 
     changeDataset = () => {
 
-        let updated_cursor=""
+        let updated_cursor
+
         if(this.state.changeable){
             updated_cursor = "auto"
         }else{
@@ -172,7 +216,7 @@ export class Datasets extends Component {
                         <CardFooter>
                         <hr />
                         <div className="stats">
-                            <i className="fas fa-info-circle" style={{color:'white'}} /> See accepted format
+                            <i className="fas fa-info-circle" style={{color:'white'}} /> See expected format
                         </div>
                         </CardFooter>
                         </Card>
@@ -198,7 +242,7 @@ export class Datasets extends Component {
                         <CardFooter>
                         <hr />
                         <div className="stats">
-                            <i className="fas fa-info-circle" style={{color:'white'}} /> See accepted format
+                            <i className="fas fa-info-circle" style={{color:'white'}} /> Title or path
                         </div>
                         </CardFooter>
                         </Card>
@@ -223,7 +267,9 @@ export class Datasets extends Component {
                         </CardBody>
                         <CardFooter>
                         <hr />
-                        
+                        <div className="stats">
+                            <i className="fas fa-info-circle" style={{color:'white'}} /> Entire row
+                        </div>
                         </CardFooter>
                         </Card>
                         </div>
@@ -255,7 +301,7 @@ export class Datasets extends Component {
             </Col>
           </Row>
 
-          <Row>
+          <Row id="expected_format">
           <Col md="12">
             <Card>
               <CardHeader>
