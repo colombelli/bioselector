@@ -9,17 +9,20 @@ import "assets/demo/demo.css";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 
 import AdminLayout from "layouts/Admin.jsx";
+import Store from "Store";
 
 
 
 const hist = createBrowserHistory();
 
 ReactDOM.render(
+  <Store>
   <Router history={hist}>
     <Switch>
       <Route path="/index" render={props => <AdminLayout {...props} />} />
       <Redirect to="/index/datasets" />
     </Switch>
-  </Router>,
+  </Router>
+  </Store>,
   document.getElementById("root")
 );
