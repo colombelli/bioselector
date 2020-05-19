@@ -23,7 +23,7 @@ import Typography from "views/Typography.jsx";
 import TableList from "views/Tables.jsx";
 import UserPage from "views/User.jsx";
 import Datasets from "views/Datasets.jsx";
-import Experiments from "views/Experiments.jsx";
+import Experiments from "views/Experiments/Experiments.jsx";
 
 var routes = [
   {

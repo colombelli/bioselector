@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
 export const DatasetsContext = React.createContext([]);
-export const ExperimentsContext = React.createContext([]);
+export const ExperimentsContext = React.createContext({page: "root", list: []});
 
 const Store = ({children}) => {
 const [datasets, setDatasets] = useState([]);
-const [experiments, setExperiments] = useState([]);
+const [experiments, setExperiments] = useState({page: "root", list: []});
 
     return (
 
