@@ -1,4 +1,4 @@
-import React, { useContext, useReducer } from 'react';
+import React, { useContext } from 'react';
 import {
     Card,
     CardBody,
@@ -8,18 +8,27 @@ import {
     Col
   } from "reactstrap";
 
-import { NavLink } from 'react-router-dom';
 import {ExperimentsContext} from '../../Store';
 
 
-function ExRoot(props) {
+function ExRoot() {
+
+    const [experiments, setExperiments] = useContext(ExperimentsContext);
+
+    function addExperiments(){
+
+        const expList = [...experiments.list];
+        const addExperimentView = "add";
+        
+        setExperiments({view: addExperimentView, list: expList});
+    }
 
     return (
         <>
         <div className="content">
                 <Row>
                     <Col>
-                    <NavLink to="/dashboard" style={{ textDecoration: 'none' }}>
+                        <div onClick={addExperiments}>
                         <Card className="card-button add">
                         <CardBody>
                         <Row>
@@ -30,7 +39,7 @@ function ExRoot(props) {
                             </Col>
                             <Col>
                             <div className="numbers">
-                                <CardTitle tag="p">Add Experiment {props.test}</CardTitle> 
+                                <CardTitle tag="p">Add Experiment</CardTitle> 
                             </div>
                             </Col>
                         </Row>
@@ -42,7 +51,7 @@ function ExRoot(props) {
                         </div>
                         </CardFooter>
                         </Card>
-                    </NavLink>
+                        </div>
                     </Col>
                     
                     <Col>
@@ -74,6 +83,7 @@ function ExRoot(props) {
                 </Row>
             </div>
         </>
+        //TODO: RENDER EXPERIMENTS CARDS
     );
   };
 

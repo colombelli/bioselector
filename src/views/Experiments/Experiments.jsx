@@ -1,27 +1,21 @@
-import React, { useContext, useReducer } from 'react';
-import {
-    Card,
-    CardBody,
-    CardFooter,
-    CardTitle,
-    Row,
-    Col
-  } from "reactstrap";
+import React, { useContext } from 'react';
 
 import {ExperimentsContext} from '../../Store';
 import ExRoot from './ExRoot.jsx';
-
+import ExAdd from './ExAdd.jsx';
 
 
 function Experiments() {
 
-    const [experiments, setExperiments] = useContext(ExperimentsContext);
+    const [experiments, ] = useContext(ExperimentsContext);
 
-    if(experiments.page === "root"){
+    if(experiments.view === "root"){
         return(<ExRoot />);
+    } else if(experiments.view === "add") {
+        return (<ExAdd />)
     } else {
-        return (<><p>random</p></>)
-    } 
+        return (<><p>else</p></>);
+    }
         
             
   };
