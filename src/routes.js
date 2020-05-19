@@ -23,6 +23,7 @@ import Typography from "views/Typography.jsx";
 import TableList from "views/Tables.jsx";
 import UserPage from "views/User.jsx";
 import Datasets from "views/Datasets.jsx";
+import Experiments from "views/Experiments.jsx";
 
 var routes = [
   {
@@ -72,6 +73,13 @@ var routes = [
     name: "Datasets",
     icon: "nc-icon nc-bullet-list-67",
     component: Datasets,
+    layout: "/index"
+  },
+  {
+    path: "/experiments",
+    name: "Experiments",
+    icon: "nc-icon nc-atom",
+    component: Experiments,
     layout: "/index"
   },
 
