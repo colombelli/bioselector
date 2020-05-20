@@ -13,34 +13,11 @@ import {ExperimentsContext} from '../../Store';
 
 
 
-function selectedMethodConstructor(selected) {
-
-    var base = {
-        sin: "",
-        hom: "",
-        het: "",
-        hyb: ""
-    };
-
-    if (selected === "sin"){
-        base.sin = " selected";
-    } else if (selected === "hom") {
-        base.hom = " selected";
-    } else if (selected === "het") {
-        base.het = " selected";
-    } else if (selected === "hyb") {
-        base.hyb = " selected";
-    }
-
-    return base;
-}
-
-
 function ExAdd(){
 
     const targetRef = useRef();
     const [dimensions, setDimensions] = useState({ width:0, height: 0 });
-    const [selectedMethod, setSelectedMethod] = useState(selectedMethodConstructor());
+    const [selectedMethod, setSelectedMethod] = useState(selectedMethodToggler());
 
     // holds the timer for setTimeout and clearInterval
     let movement_timer = null;
@@ -73,7 +50,46 @@ function ExAdd(){
     // This sets the dimensions on the first render
     useLayoutEffect(() => {
         testDimensions();
-      }, []);
+    }, []);
+
+
+    function selectedMethodToggler(selected) {
+
+        var base = {
+            sin: false,
+            hom: false,
+            het: false,
+            hyb: false
+        };
+    
+        if (selected === "sin"){
+            base.sin = true;
+        } else if (selected === "hom") {
+            base.hom = true;
+        } else if (selected === "het") {
+            base.het = true;
+        } else if (selected === "hyb") {
+            base.hyb = true;
+        } else {
+            return base;
+        }
+    
+        setSelectedMethod(base);
+        return
+    }
+
+
+    function getMethodCardClass(method) {
+
+        var cardClass = "card-method";
+
+        if (method){
+            return cardClass + " selected";
+        } else {
+            return cardClass;
+        }
+    }
+
 
     return(
     <>
@@ -82,7 +98,7 @@ function ExAdd(){
         <Row>
             <Col>
                 <Card 
-                className={"card-method" + selectedMethod.sin} body
+                className={getMethodCardClass(selectedMethod.sin)} body
                 style={{height:dimensions.height}}
                 >
                 <CardTitle tag="h5">Single Feature Selectior</CardTitle>
@@ -94,14 +110,14 @@ function ExAdd(){
                 </CardText>
                 </CardBody>
                 <Button color={selectedMethod.sin} onClick={() => {
-                    setSelectedMethod(selectedMethodConstructor("sin"));
+                    selectedMethodToggler("sin");
                 }}>Pick</Button>
                 </Card>
             </Col>
 
             <Col>
                 <Card 
-                className={"card-method" + selectedMethod.het} body
+                className={getMethodCardClass(selectedMethod.het)} body
                 style={{height:dimensions.height}}
                 >
                 <CardTitle tag="h5">Heterogeneous Ensemble</CardTitle>
@@ -113,7 +129,7 @@ function ExAdd(){
                 </CardText>
                 </CardBody>
                 <Button color={selectedMethod.het} onClick={() => {
-                    setSelectedMethod(selectedMethodConstructor("het"));
+                    selectedMethodToggler("het");
                 }}>Pick</Button>
                 </Card>
             </Col>
@@ -122,7 +138,7 @@ function ExAdd(){
         <Row>
             <Col>
                 <div ref={targetRef} className="shadow">
-                <Card className={"card-method" + selectedMethod.hom} body>
+                <Card className={getMethodCardClass(selectedMethod.hom)} body>
                 <CardTitle tag="h5">Homogeneous Ensemble</CardTitle>
                 <hr></hr>
                 <CardBody>
@@ -132,7 +148,7 @@ function ExAdd(){
                 </CardText>
                 </CardBody>
                 <Button onClick={() => {
-                    setSelectedMethod(selectedMethodConstructor("hom"));
+                    selectedMethodToggler("hom");
                 }}>Pick</Button>
                 </Card>
                 </div>
@@ -140,7 +156,7 @@ function ExAdd(){
 
             <Col>
                 <Card 
-                className={"card-method" + selectedMethod.hyb} body
+                className={getMethodCardClass(selectedMethod.hyb)} body
                 style={{height:dimensions.height}}
                 >
                 <CardTitle tag="h5">Hybrid Ensemble</CardTitle>
@@ -152,7 +168,7 @@ function ExAdd(){
                 </CardText>
                 </CardBody>
                 <Button onClick={() => {
-                    setSelectedMethod(selectedMethodConstructor("hyb"));
+                    selectedMethodToggler("hyb");
                 }}>Pick</Button>
                 </Card>
             </Col>
