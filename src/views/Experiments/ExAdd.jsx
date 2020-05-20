@@ -9,8 +9,8 @@ import {
     Button
   } from "reactstrap";
 
-import {ExperimentsContext} from '../../Store';
-
+import {ExperimentsContext} from '../../Store.js';
+import ExAddConfigs1 from './ExAddConfigs1.jsx';
 
 
 function ExAdd(){
@@ -18,6 +18,7 @@ function ExAdd(){
     const targetRef = useRef();
     const [dimensions, setDimensions] = useState({ width:0, height: 0 });
     const [selectedMethod, setSelectedMethod] = useState(selectedMethodToggler());
+    const [configs1, setConfigs1] = useState();
 
     // holds the timer for setTimeout and clearInterval
     let movement_timer = null;
@@ -109,7 +110,7 @@ function ExAdd(){
                     just one feature selection algorithm.
                 </CardText>
                 </CardBody>
-                <Button color={selectedMethod.sin} onClick={() => {
+                <Button onClick={() => {
                     selectedMethodToggler("sin");
                 }}>Pick</Button>
                 </Card>
@@ -128,7 +129,7 @@ function ExAdd(){
                     with chosen feature selection methods
                 </CardText>
                 </CardBody>
-                <Button color={selectedMethod.het} onClick={() => {
+                <Button onClick={() => {
                     selectedMethodToggler("het");
                 }}>Pick</Button>
                 </Card>
@@ -173,7 +174,8 @@ function ExAdd(){
                 </Card>
             </Col>
         </Row>
-
+        
+        <ExAddConfigs1 methods={selectedMethod} configs={configs1} setConfigs={setConfigs1}/>
     </div>
         
     </>
