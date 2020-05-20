@@ -1,16 +1,12 @@
 .card-method{
     border-radius: $border-radius-extreme;
-    box-shadow: 0 6px 10px -4px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0px 0px 0px rgba(0, 0, 0, 0.15);
     background-color: #FFFFFF;
     color: $card-black-color;
     margin-bottom: 20px;
     position: relative;
 
-    &.shadow {
-        box-shadow:         10px 10px 10px 10px #f00;
-        border: 5px solid;
-    }
-    border: 1px solid $success-color;
+    border: 0px solid $success-color;
   
     -webkit-transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 200ms ease;
     -moz-transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 200ms ease;
@@ -142,5 +138,31 @@
               border-radius: $border-radius-extreme;
           }
       }
+
+      .btn{
+        &:hover,
+        &:focus{
+            background-color: $success-color !important;
+        }
+        &:active,
+        &.active{
+            background-color: $success-states-color !important;
+        }
+    }
+
+      &.selected{
+        
+        box-shadow:10px 10px 10px 0px rgba(0, 0, 0, 0.15);
+        .btn{
+            background-color: $success-states-color !important;
+        }
+      }
+  }
+
+  .card-method:hover{
+    box-shadow:10px 10px 10px 0px rgba(0, 0, 0, 0.15);
+    .btn{
+        background-color: $success-color;
+    }
   }
   

@@ -16,20 +16,20 @@ import {ExperimentsContext} from '../../Store';
 function selectedMethodConstructor(selected) {
 
     var base = {
-        sin: "secondary",
-        hom: "secondary",
-        het: "secondary",
-        hyb: "secondary"
+        sin: "",
+        hom: "",
+        het: "",
+        hyb: ""
     };
 
     if (selected === "sin"){
-        base.sin = "success";
+        base.sin = " selected";
     } else if (selected === "hom") {
-        base.hom = "success";
+        base.hom = " selected";
     } else if (selected === "het") {
-        base.het = "success";
+        base.het = " selected";
     } else if (selected === "hyb") {
-        base.hyb = "success";
+        base.hyb = " selected";
     }
 
     return base;
@@ -82,8 +82,7 @@ function ExAdd(){
         <Row>
             <Col>
                 <Card 
-                className="card-method shadow" 
-                body outline color={selectedMethod.sin}
+                className={"card-method" + selectedMethod.sin} body
                 style={{height:dimensions.height}}
                 >
                 <CardTitle tag="h5">Single Feature Selectior</CardTitle>
@@ -102,8 +101,7 @@ function ExAdd(){
 
             <Col>
                 <Card 
-                className="card-method" 
-                body outline color={selectedMethod.het}
+                className={"card-method" + selectedMethod.het} body
                 style={{height:dimensions.height}}
                 >
                 <CardTitle tag="h5">Heterogeneous Ensemble</CardTitle>
@@ -123,8 +121,8 @@ function ExAdd(){
 
         <Row>
             <Col>
-                <div ref={targetRef}>
-                <Card className="card-method" body outline color={selectedMethod.hom}>
+                <div ref={targetRef} className="shadow">
+                <Card className={"card-method" + selectedMethod.hom} body>
                 <CardTitle tag="h5">Homogeneous Ensemble</CardTitle>
                 <hr></hr>
                 <CardBody>
@@ -133,7 +131,7 @@ function ExAdd(){
                     with one feature selection method and a given number of bootstraps.
                 </CardText>
                 </CardBody>
-                <Button color={selectedMethod.hom} onClick={() => {
+                <Button onClick={() => {
                     setSelectedMethod(selectedMethodConstructor("hom"));
                 }}>Pick</Button>
                 </Card>
@@ -142,8 +140,7 @@ function ExAdd(){
 
             <Col>
                 <Card 
-                className="card-method" 
-                body outline color={selectedMethod.hyb}
+                className={"card-method" + selectedMethod.hyb} body
                 style={{height:dimensions.height}}
                 >
                 <CardTitle tag="h5">Hybrid Ensemble</CardTitle>
@@ -154,7 +151,7 @@ function ExAdd(){
                     with chosen feature selection methods and a given number of bootstraps.   
                 </CardText>
                 </CardBody>
-                <Button color={selectedMethod.hyb} onClick={() => {
+                <Button onClick={() => {
                     setSelectedMethod(selectedMethodConstructor("hyb"));
                 }}>Pick</Button>
                 </Card>
