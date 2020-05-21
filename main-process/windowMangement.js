@@ -15,8 +15,7 @@ ipcMain.on('BROWSE_FILES', (event, args) => {
             title: "Add Dataset (csv or rds files)",
             properties: ['openFile', 'multiSelections'],
             filters: [
-                { name: 'RDS object', extensions: ['rds'] },
-                { name: 'CSV table', extensions: ['csv'] }
+                { name: 'RDS object and CSV table', extensions: ['rds', 'csv'] }
             ] 
         },
         (filename) => {
@@ -37,8 +36,7 @@ ipcMain.on('BROWSE_FILE', (event, args) => {
             title: "Select Dataset (csv or rds files)",
             properties: ['openFile'],
             filters: [
-                { name: 'RDS object', extensions: ['rds'] },
-                { name: 'CSV table', extensions: ['csv'] }
+                { name: 'RDS object and CSV table', extensions: ['rds', 'csv'] }
             ] 
         },
         (filename) => {
@@ -66,3 +64,44 @@ ipcMain.on('ASK_DATASET_TITLE', (event, path) => {
 
 });
 
+
+
+ipcMain.on('BROWSE_FILE_METHOD', (event, args) => {
+
+    dialog.showOpenDialog(
+        {   
+            title: "Select new method (.py or .r files only)",
+            properties: ['openFile'],
+            filters: [
+                { name: 'Script', extensions: ['py', 'r'] }
+            ] 
+        },
+        (filename) => {
+            event.returnValue = filename
+        }
+    )
+});
+
+
+ipcMain.on('ASK_SELECTOR_INFO', (event, type) => {
+
+    var lab;
+
+    if(type === "label"){
+        lab = 'Selector Name:';
+    } else {
+        lab = 'Name of the ranking file for saving in results directory:';
+    }
+
+    prompt({
+        title: 'Selector Info',
+        label: lab,
+        inputAttrs: {
+            type: 'text'
+        },
+    })
+    .then((r) => {
+        event.returnValue = r
+    })
+
+});

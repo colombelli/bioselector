@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Form,
     FormGroup,
@@ -6,13 +6,16 @@ import {
     Col,
     Card,
     CardBody,
-    CardTitle
+    CardTitle,
+    Button
 } from "reactstrap";
 
+const electron = window.require('electron');
+const { ipcRenderer } = electron;  
 
 function ExAddConfigs1(props){
     
-    var availableMethods = [
+    var implementedMethods = [
 
         {label:"ReliefF", fileName: "reliefF", lang: "python", rankingFile: "rf"},
         {label:"Characteristic Direction", fileName: "geoDE", lang: "python", rankingFile: "gd"},
@@ -21,6 +24,42 @@ function ExAddConfigs1(props){
         {label:"One Rule", fileName: "oneR", lang: "r", rankingFile: "or"}
 
     ]
+
+    const [availableMethods, setMethods] = useState(implementedMethods);
+
+
+    function getFileNameFromPath(path){
+        return path.split('\\').pop().split('/').pop().split('.')[0];
+    }
+
+    function getScriptLangFromPath(path){
+        let extension = path.split('\\').pop().split('/').pop().split('.').pop();
+        if(extension === "py"){return "python"}
+        else if(extension === "r"){return "r"}
+        return
+    }
+
+    function addMethod(){
+        let path = ipcRenderer.sendSync('BROWSE_FILE_METHOD');
+        if(path.length === 1){ // if some file was selected
+            
+            //TODO: copy the file to the scripts/engine/etc etc folder
+
+            let fileName = getFileNameFromPath(path[0]);
+            let lang = getScriptLangFromPath(path[0]);
+            
+            let label = ipcRenderer.sendSync('ASK_SELECTOR_INFO', "label");
+            if(label === null){return};
+            let rankingFile = ipcRenderer.sendSync('ASK_SELECTOR_INFO', "ranking");
+            if(rankingFile === null){return};
+            
+            const newMethod = {label: label, fileName: fileName, lang: lang, rankingFile: rankingFile};
+            const newMethods = [...availableMethods];
+            newMethods.push(newMethod);
+            setMethods(newMethods);
+        }
+        return
+    }
 
     function renderRightForm() {
             
@@ -74,6 +113,7 @@ function ExAddConfigs1(props){
                     </FormGroup>
                     </Form>
                 </CardBody>
+                <Button color="secundary" onClick={addMethod}>Add New</Button>
                 </Card>
             </>
         );   
