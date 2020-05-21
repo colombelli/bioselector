@@ -173,9 +173,17 @@ function ExAdd(){
                 }}>Pick</Button>
                 </Card>
             </Col>
+
         </Row>
+
+        <Row>
         
-        <ExAddConfigs1 methods={selectedMethod} configs={configs1} setConfigs={setConfigs1}/>
+            <Col>
+                <ExAddConfigs1 methods={selectedMethod} configs={configs1} setConfigs={setConfigs1}/>
+            </Col>
+        
+        </Row>
+
     </div>
         
     </>
