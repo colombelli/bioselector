@@ -90,7 +90,7 @@ ipcMain.on('ASK_SELECTOR_INFO', (event, type) => {
     if(type === "label"){
         lab = 'Selector Name:';
     } else {
-        lab = 'Name of the ranking file for saving in results directory:';
+        lab = 'Name for saving the ranking file:';
     }
 
     prompt({

@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect, useState } from 'react';
+import React, { useRef, useLayoutEffect, useState, useInput } from 'react';
 import {
     Card,
     CardBody,
@@ -6,12 +6,14 @@ import {
     CardTitle,
     Row,
     Col,
-    Button
-  } from "reactstrap";
+    Button,
+    Form,Input, FormGroup
+} from "reactstrap";
+
+import {useForm} from "react-hook-form";
 
 import {ExperimentsContext} from '../../Store.js';
 import ExAddConfigs1 from './ExAddConfigs1.jsx';
-
 
 function ExAdd(){
 
@@ -19,7 +21,9 @@ function ExAdd(){
     const [dimensions, setDimensions] = useState({ width:0, height: 0 });
     const [selectedMethod, setSelectedMethod] = useState(selectedMethodToggler());
     const [configs1, setConfigs1] = useState();
-
+    const {register, handleSubmit} = useForm();
+    
+  
     // holds the timer for setTimeout and clearInterval
     let movement_timer = null;
 
@@ -92,9 +96,11 @@ function ExAdd(){
     }
 
 
+    const onSubmit = (data) => {
+        console.log(data)};
+
     return(
     <>
-        
     <div className="content">
         <Row>
             <Col>
@@ -179,7 +185,14 @@ function ExAdd(){
         <Row>
         
             <Col>
-                <ExAddConfigs1 methods={selectedMethod} configs={configs1} setConfigs={setConfigs1}/>
+            <Form onSubmit={handleSubmit(onSubmit)}>
+                <ExAddConfigs1 
+                methods={selectedMethod} 
+                configs={configs1} 
+                setConfigs={setConfigs1}
+                register={register}/>
+                <Button>Submit</Button>
+            </Form>
             </Col>
         
         </Row>

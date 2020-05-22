@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import {
-    Form,
     FormGroup,
-    Input,
     Col,
     Card,
     CardBody,
@@ -61,6 +59,7 @@ function ExAddConfigs1(props){
         return
     }
 
+
     function renderRightForm() {
             
         if(props.methods.sin || props.methods.hom){
@@ -70,7 +69,7 @@ function ExAddConfigs1(props){
                     return(
                         <FormGroup check>
                             <div style={{paddingLeft:"12px"}}>
-                            <Input type="radio" name="selected" />{' '}
+                            <input type="radio" name="same" value={method.fileName} ref={props.register}/>{' '}
                             {method.label}
                             </div>
                         </FormGroup>
@@ -84,12 +83,10 @@ function ExAddConfigs1(props){
 
                 availableMethods.map((method, index) => {
                     return(
-                        <FormGroup check>
                             <div style={{paddingLeft:"12px"}}>
-                            <Input bsSize="10" type="radio" name={method.fileName} />{' '}
+                            <input type="radio" name={method.fileName} value="selected" ref={props.register} />{' '}
                             {method.label}
                             </div>
-                        </FormGroup>
                     );
                 })
             );
@@ -105,13 +102,12 @@ function ExAddConfigs1(props){
                 <Card body>
                 <CardTitle tag="h5">Selectors:</CardTitle>
                 <CardBody>
-                    <Form>
+                    
                     <FormGroup row>
                     <Col>
                         {renderRightForm()}
                     </Col>
                     </FormGroup>
-                    </Form>
                 </CardBody>
                 <Button color="secundary" onClick={addMethod}>Add New</Button>
                 </Card>
