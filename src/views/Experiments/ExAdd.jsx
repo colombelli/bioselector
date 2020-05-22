@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect, useState, useInput } from 'react';
+import React, { useRef, useLayoutEffect, useState, useEffect } from 'react';
 import {
     Card,
     CardBody,
@@ -7,7 +7,7 @@ import {
     Row,
     Col,
     Button,
-    Form,Input, FormGroup
+    Form
 } from "reactstrap";
 
 import {useForm} from "react-hook-form";
@@ -20,8 +20,7 @@ function ExAdd(){
     const targetRef = useRef();
     const [dimensions, setDimensions] = useState({ width:0, height: 0 });
     const [selectedMethod, setSelectedMethod] = useState(selectedMethodToggler());
-    const [configs1, setConfigs1] = useState();
-    const {register, handleSubmit} = useForm();
+    const {register, handleSubmit, unregister, getValues} = useForm();
     
   
     // holds the timer for setTimeout and clearInterval
@@ -52,10 +51,23 @@ function ExAdd(){
         }
     }
 
+
+    function clearRegisteredData(){
+        
+        let registeredNames = Object.keys(getValues());
+        registeredNames.forEach(name => {
+            unregister(name);
+        });
+        
+    }
+
+
     // This sets the dimensions on the first render
     useLayoutEffect(() => {
         testDimensions();
     }, []);
+
+
 
 
     function selectedMethodToggler(selected) {
@@ -78,7 +90,7 @@ function ExAdd(){
         } else {
             return base;
         }
-    
+        clearRegisteredData(); 
         setSelectedMethod(base);
         return
     }
@@ -97,7 +109,8 @@ function ExAdd(){
 
 
     const onSubmit = (data) => {
-        console.log(data)};
+        console.log(data)
+    };
 
     return(
     <>
@@ -187,9 +200,7 @@ function ExAdd(){
             <Col>
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <ExAddConfigs1 
-                methods={selectedMethod} 
-                configs={configs1} 
-                setConfigs={setConfigs1}
+                methods={selectedMethod}
                 register={register}/>
                 <Button>Submit</Button>
             </Form>

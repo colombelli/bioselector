@@ -58,12 +58,11 @@ function ExAddConfigs1(props){
                 selectors.map((method, index) => {
 
                     return(
-                        <FormGroup check>
-                            <div style={{paddingLeft:"12px"}}>
-                            <input type="radio" name="selector" value={method.fileName} ref={props.register}/>{' '}
+                        <label className="configs" key={index}>
                             {method.label}
-                            </div>
-                        </FormGroup>
+                            <input type="radio" name="selector" value={method.fileName} ref={props.register({ required: true })}/>{' '}
+                            <span className="checkmark"></span>
+                        </label>
                     );
                 })
             );
@@ -74,10 +73,11 @@ function ExAddConfigs1(props){
 
                 selectors.map((method, index) => {
                     return(
-                            <div style={{paddingLeft:"12px"}}>
-                            <input type="radio" name={method.fileName} value="selected" ref={props.register} />{' '}
-                            {method.label}
-                            </div>
+                            <label className="configs" key={index}>
+                                {method.label}
+                                <input type="radio" name={method.fileName} value={method.fileName} ref={props.register()} />{' '}
+                                <span className="checkmark"></span>
+                            </label>
                     );
                 })
             );
