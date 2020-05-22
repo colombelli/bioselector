@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import {
     FormGroup,
     Col,
@@ -7,24 +7,15 @@ import {
     CardTitle,
     Button
 } from "reactstrap";
+import {SelectorsContext} from '../../Store.js';
 
 const electron = window.require('electron');
 const { ipcRenderer } = electron;  
 
+
 function ExAddConfigs1(props){
     
-    var implementedMethods = [
-
-        {label:"ReliefF", fileName: "reliefF", lang: "python", rankingFile: "rf"},
-        {label:"Characteristic Direction", fileName: "geoDE", lang: "python", rankingFile: "gd"},
-        {label:"Gain Ratio", fileName: "gain-ratio", lang: "r", rankingFile: "gr"},
-        {label:"Symmetrical Uncertainty", fileName: "symmetrical-uncertainty", lang: "r", rankingFile: "su"},
-        {label:"One Rule", fileName: "oneR", lang: "r", rankingFile: "or"}
-
-    ]
-
-    const [availableMethods, setMethods] = useState(implementedMethods);
-
+    const [selectors, setSelectors] = useContext(SelectorsContext);
 
     function getFileNameFromPath(path){
         return path.split('\\').pop().split('/').pop().split('.')[0];
@@ -51,10 +42,10 @@ function ExAddConfigs1(props){
             let rankingFile = ipcRenderer.sendSync('ASK_SELECTOR_INFO', "ranking");
             if(rankingFile === null){return};
             
-            const newMethod = {label: label, fileName: fileName, lang: lang, rankingFile: rankingFile};
-            const newMethods = [...availableMethods];
-            newMethods.push(newMethod);
-            setMethods(newMethods);
+            const newSelector = {label: label, fileName: fileName, lang: lang, rankingFile: rankingFile};
+            const newSelectors = [...selectors];
+            newSelectors.push(newSelector);
+            setSelectors(newSelectors);
         }
         return
     }
@@ -64,12 +55,12 @@ function ExAddConfigs1(props){
             
         if(props.methods.sin || props.methods.hom){
             return(
-                availableMethods.map((method, index) => {
+                selectors.map((method, index) => {
 
                     return(
                         <FormGroup check>
                             <div style={{paddingLeft:"12px"}}>
-                            <input type="radio" name="same" value={method.fileName} ref={props.register}/>{' '}
+                            <input type="radio" name="selector" value={method.fileName} ref={props.register}/>{' '}
                             {method.label}
                             </div>
                         </FormGroup>
@@ -81,7 +72,7 @@ function ExAddConfigs1(props){
         else if(props.methods.het || props.methods.hyb) {
             return(
 
-                availableMethods.map((method, index) => {
+                selectors.map((method, index) => {
                     return(
                             <div style={{paddingLeft:"12px"}}>
                             <input type="radio" name={method.fileName} value="selected" ref={props.register} />{' '}
