@@ -7,7 +7,7 @@ import {
     CardTitle,
     Button
 } from "reactstrap";
-import {SelectorsContext} from '../../Store.js';
+import {AggregatorsContext} from '../../Store.js';
 
 const electron = window.require('electron');
 const { ipcRenderer } = electron;  
@@ -15,51 +15,44 @@ const { ipcRenderer } = electron;
 
 function ExAddConfigs2(props){
     
-    const [selectors, setSelectors] = useContext(SelectorsContext);
+    const [aggregators, setAggregators] = useContext(AggregatorsContext);
 
     function getFileNameFromPath(path){
         return path.split('\\').pop().split('/').pop().split('.')[0];
     }
 
-    function getScriptLangFromPath(path){
-        let extension = path.split('\\').pop().split('/').pop().split('.').pop();
-        if(extension === "py"){return "python"}
-        else if(extension === "r"){return "r"}
-        return
-    }
-
-    function addAggregator(){
+    
+    function addAggregator(){return console.log("add")}/*
         let path = ipcRenderer.sendSync('BROWSE_FILE_METHOD');
         if(path.length === 1){ // if some file was selected
             
             //TODO: copy the file to the scripts/engine/etc etc folder
 
             let fileName = getFileNameFromPath(path[0]);
-            let lang = getScriptLangFromPath(path[0]);
             
             let label = ipcRenderer.sendSync('ASK_SELECTOR_INFO', "label");
             if(label === null){return};
             let rankingFile = ipcRenderer.sendSync('ASK_SELECTOR_INFO', "ranking");
             if(rankingFile === null){return};
             
-            const newSelector = {label: label, fileName: fileName, lang: lang, rankingFile: rankingFile};
-            const newSelectors = [...selectors];
+            const newAggregator = {label: label, fileName: fileName};
+            const newAggregators = [...selectors];
             newSelectors.push(newSelector);
             setSelectors(newSelectors);
         }
         return
-    }
+    }*/
 
 
-    function renderRightForm() {
+    function renderRightForm(aggregations, name) {
 
         return(
-            selectors.map((method, index) => {
+            aggregations.map((method, index) => {
 
                 return(
                     <label className="configs" key={index}>
                         {method.label}
-                        <input type="radio" name="selector" value={method.fileName} ref={props.register({ required: true })}/>{' '}
+                        <input type="radio" name={name} value={method.fileName} ref={props.register({ required: true })}/>{' '}
                         <span className="checkmark"></span>
                     </label>
                 );
@@ -67,8 +60,6 @@ function ExAddConfigs2(props){
         );
     }
 
-
-    
 
     if (props.methods.het ||  props.methods.hom){
         
@@ -80,7 +71,7 @@ function ExAddConfigs2(props){
                     
                     <FormGroup row>
                     <Col>
-                        {renderRightForm()}
+                        {renderRightForm(aggregators.oneAgg, "oneAgg")}
                     </Col>
                     </FormGroup>
                 </CardBody>
@@ -97,10 +88,13 @@ function ExAddConfigs2(props){
                     
                     <FormGroup row>
                     <Col>
-                        <CardTitle tag="h7">Level 1:</CardTitle>
-                        {renderRightForm()}
-                        <CardTitle tag="h7">Level 2:</CardTitle>
-                        {renderRightForm()}
+                        <CardTitle tag="h6">Level 1:</CardTitle>
+                        <hr />
+                        {renderRightForm(aggregators.lvl1, "lvl1")}
+                        <br></br>
+                        <CardTitle tag="h6">Level 2:</CardTitle>
+                        <hr />
+                        {renderRightForm(aggregators.lvl2, "lvl2")}
                     </Col>
                     </FormGroup>
                 </CardBody>

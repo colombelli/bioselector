@@ -8,10 +8,14 @@ const availableSelectors = [
     {label:"One Rule", fileName: "oneR", lang: "r", rankingFile: "or"}
 ]
 
-const availableAggregators = [
-    {label: "Borda Count", fileName: "borda"},
-    {label: "Stability Weightened", fileName: "borda"}
-]
+const bordaRanking = {label: "Borda Count", fileName: "borda"}
+const stbW = {label: "Stability Weightened", fileName: "borda"} 
+
+const availableAggregators = {
+    oneAgg: [bordaRanking],
+    lvl1: [bordaRanking, stbW],
+    lvl2: [bordaRanking]
+}
 
 export const DatasetsContext = React.createContext([]);
 export const ExperimentsContext = React.createContext({view: "root", list: []});
