@@ -75,7 +75,7 @@ function ExAddConfigs1(props){
                     return(
                             <label className="configs" key={index}>
                                 {method.label}
-                                <input type="radio" name={method.fileName} value={method.fileName} ref={props.register()} />{' '}
+                                <input type="checkbox" name={method.fileName} value={method.fileName} ref={props.register()} />{' '}
                                 <span className="checkmark"></span>
                             </label>
                     );

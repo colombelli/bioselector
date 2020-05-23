@@ -9,7 +9,7 @@ const availableSelectors = [
 ]
 
 const bordaRanking = {label: "Borda Count", fileName: "borda"}
-const stbW = {label: "Stability Weightened", fileName: "borda"} 
+const stbW = {label: "Stability Weightened", fileName: "stb_weightened_layer1"} 
 
 const availableAggregators = {
     oneAgg: [bordaRanking],
