@@ -10,7 +10,7 @@ import {
 import {AggregatorsContext} from '../../Store.js';
 
 const electron = window.require('electron');
-const { ipcRenderer } = electron;  
+const { ipcRenderer } = electron;
 
 
 function ExAddConfigs2(props){
@@ -22,26 +22,30 @@ function ExAddConfigs2(props){
     }
 
     
-    function addAggregator(){return console.log("add")}/*
+    function addAggregator(){
         let path = ipcRenderer.sendSync('BROWSE_FILE_METHOD');
         if(path.length === 1){ // if some file was selected
             
             //TODO: copy the file to the scripts/engine/etc etc folder
 
             let fileName = getFileNameFromPath(path[0]);
-            
-            let label = ipcRenderer.sendSync('ASK_SELECTOR_INFO', "label");
-            if(label === null){return};
-            let rankingFile = ipcRenderer.sendSync('ASK_SELECTOR_INFO', "ranking");
-            if(rankingFile === null){return};
-            
-            const newAggregator = {label: label, fileName: fileName};
-            const newAggregators = [...selectors];
-            newSelectors.push(newSelector);
-            setSelectors(newSelectors);
+            ipcRenderer.sendSync("ASK_AGGREGATOR_INFO")
+            /*
+            if(props.methods.hyb){}
+            else{
+                let label = ipcRenderer.sendSync('ASK_SELECTOR_INFO', "label");
+                if(label === null){return};
+                let rankingFile = ipcRenderer.sendSync('ASK_SELECTOR_INFO', "ranking");
+                if(rankingFile === null){return};
+                
+                const newAggregator = {label: label, fileName: fileName};
+                const newAggregators = [...selectors];
+                newSelectors.push(newSelector);
+                setSelectors(newSelectors);
+            }*/
         }
         return
-    }*/
+    }
 
 
     function renderRightForm(aggregations, name) {

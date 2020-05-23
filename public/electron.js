@@ -50,4 +50,5 @@ app.on('activate', () => {
 
 require('../main-process/windowMangement')
 require('../main-process/commonMain')
+require('../main-process/alerts')
        

@@ -105,3 +105,5 @@ ipcMain.on('ASK_SELECTOR_INFO', (event, type) => {
     })
 
 });
+
+
