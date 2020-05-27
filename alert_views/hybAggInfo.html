@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple login form</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <style>
+      html, body {
+      display: flex;
+      justify-content: center;
+      font-family: 'Montserrat', "Helvetica", Arial, sans-serif;
+      color: #66615b;;
+      font-size: 15px;
+      }
+      form {
+      border: 5px solid #f1f1f1;
+      }
+      input[type=text] {
+      width: 100%;
+      padding: 16px 8px;
+      margin: 8px 0;
+      display: block;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      }
+      button {
+      background-color: #66615B;
+      font-family: 'Montserrat', "Helvetica", Arial, sans-serif;
+      font-size: 0.8571em;
+      font-weight: 600;
+      color: white;
+      margin: 10px 1px;
+      border: none;
+      cursor: pointer;
+      width: 40%;
+      border-width: 2px;
+      border-radius: 2px;
+      line-height: 1.35em;
+      height: 2.375rem;
+
+      }
+      .divider{
+        width:5px;
+        height:auto;
+        display:inline-block;
+      }
+      h1 {
+      text-align:center;
+      font-size:18;
+      }
+      button:hover {
+      opacity: 0.8;
+      cursor: pointer;
+      }
+      .formcontainer {
+      text-align: left;
+      margin: 24px 50px 12px;
+      }
+      .container {
+      padding: 16px 0;
+      text-align:left;
+      }
+
+    </style>
+
+    <script>
+
+        const { ipcRenderer } = require('electron');
+
+        function newAggSubmitted() {
+            var name = document.getElementById("name").value;
+            
+            var form = document.getElementById("form");
+            var level = form.elements["level"].value;
+
+            ipcRenderer.send('NEW_AGG_INFO_PROVIDED', [name, level]);
+        }
+
+        function cancel() {
+            ipcRenderer.send('NEW_AGG_INFO_PROVIDED', null);
+        }
+
+    </script>
+
+  </head>
+  <body>
+    <form id="form">
+      <h1>Aggregator Info</h1>
+      <div class="formcontainer">
+      <hr/>
+      <div class="container">
+        <label><strong>Aggregator Name</strong></label>
+        <input type="text" placeholder="Ex: Borda" id="name" required>
+        <label><strong>Level</strong></label>
+
+        <label class="radio-inline"><input type="radio" name="level" value="1" checked>Level 1</label>
+        <label class="radio-inline"><input type="radio" name="level" value="2">Level 2</label>            
+
+      </div>
+        <table>
+        <button onclick=newAggSubmitted()>OK</button>
+        <div class="divider"></div>
+        <button onclick=cancel()>CANCEL</button>
+        </table>
+      </div>
+    </form>
+  </body>
+</html>

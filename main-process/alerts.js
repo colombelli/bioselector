@@ -9,14 +9,13 @@ let alertWin;
 ipcMain.on('ASK_AGGREGATOR_INFO', (event, type) => {
 
     const alertHtml = url.format({
-        pathname: path.join(__dirname, `../alert_views/newAggInput.html`),
+        pathname: path.join(__dirname, `../alert_views/hybAggInfo.html`),
         protocol: 'file:',
         slashes: true,
     });
-    console.log(alertHtml)
+
     alertWin = new BrowserWindow({
-        height: 300,
-        width: 600,
+        useContentSize: true,
         frame: false,
 		webPreferences: {
 			nodeIntegration: true,
