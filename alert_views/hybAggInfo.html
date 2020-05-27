@@ -84,7 +84,7 @@
 
   </head>
   <body>
-    <form id="form">
+    <form id="form" action="javascript:newAggSubmitted()">
       <h1>Aggregator Info</h1>
       <div class="formcontainer">
       <hr/>
@@ -97,7 +97,7 @@
         <label class="radio-inline"><input type="radio" name="level" value="2">Level 2</label>            
 
       </div>
-        <button onclick=newAggSubmitted()>OK</button>
+        <button type="submit">OK</button>
         <div class="divider"></div>
         <button onclick=cancel()>CANCEL</button>
       </div>
