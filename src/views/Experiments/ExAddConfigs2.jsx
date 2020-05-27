@@ -29,7 +29,8 @@ function ExAddConfigs2(props){
             //TODO: copy the file to the scripts/engine/etc etc folder
 
             let fileName = getFileNameFromPath(path[0]);
-            ipcRenderer.sendSync("ASK_AGGREGATOR_INFO")
+            let values = ipcRenderer.sendSync("ASK_AGGREGATOR_INFO")
+            console.log(values)
             /*
             if(props.methods.hyb){}
             else{
