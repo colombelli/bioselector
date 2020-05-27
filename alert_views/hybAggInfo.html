@@ -10,6 +10,7 @@
       font-family: 'Montserrat', "Helvetica", Arial, sans-serif;
       color: #66615b;;
       font-size: 15px;
+      overflow: hidden
       }
       form {
       border: 5px solid #f1f1f1;
@@ -53,7 +54,7 @@
       }
       .formcontainer {
       text-align: left;
-      margin: 24px 50px 12px;
+      margin: 24px 50px 10px;
       }
       .container {
       padding: 16px 0;
@@ -72,7 +73,7 @@
             var form = document.getElementById("form");
             var level = form.elements["level"].value;
 
-            ipcRenderer.send('NEW_AGG_INFO_PROVIDED', [name, level]);
+            ipcRenderer.send('NEW_AGG_INFO_PROVIDED', {name: name, level: level});
         }
 
         function cancel() {
@@ -90,17 +91,15 @@
       <div class="container">
         <label><strong>Aggregator Name</strong></label>
         <input type="text" placeholder="Ex: Borda" id="name" required>
-        <label><strong>Level</strong></label>
+        <label><strong>Level:</strong></label>
 
         <label class="radio-inline"><input type="radio" name="level" value="1" checked>Level 1</label>
         <label class="radio-inline"><input type="radio" name="level" value="2">Level 2</label>            
 
       </div>
-        <table>
         <button onclick=newAggSubmitted()>OK</button>
         <div class="divider"></div>
         <button onclick=cancel()>CANCEL</button>
-        </table>
       </div>
     </form>
   </body>

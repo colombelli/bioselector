@@ -22,15 +22,18 @@ function ExAddConfigs2(props){
     }
 
     
-    function addAggregator(){
+    function addAggregator(ensembleAggInfo){
         let path = ipcRenderer.sendSync('BROWSE_FILE_METHOD');
         if(path.length === 1){ // if some file was selected
             
             //TODO: copy the file to the scripts/engine/etc etc folder
 
             let fileName = getFileNameFromPath(path[0]);
-            let values = ipcRenderer.sendSync("ASK_AGGREGATOR_INFO")
-            console.log(values)
+            let values = ipcRenderer.sendSync("ASK_AGGREGATOR_INFO", ensembleAggInfo)
+
+            if (values !== null && values.name){
+                console.log(values.name, values.level)
+            }
             /*
             if(props.methods.hyb){}
             else{
@@ -103,7 +106,7 @@ function ExAddConfigs2(props){
                     </Col>
                     </FormGroup>
                 </CardBody>
-                <Button color="secundary" onClick={addAggregator}>Add New</Button>
+                <Button color="secundary" onClick={addAggregator("hybAggInfo")}>Add New</Button>
                 </Card>
             </Col>
         );
