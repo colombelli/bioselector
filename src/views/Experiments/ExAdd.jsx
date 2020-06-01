@@ -111,6 +111,7 @@ function ExAdd(){
 
 
     const onSubmit = (data) => {
+        console.log("aaa")
         console.log(data)
     };
 

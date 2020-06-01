@@ -1,60 +1,78 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
     FormGroup,
+    Label,
+    Input,
+    Row,
     Col,
     Card,
     CardBody,
 } from "reactstrap";
-import {AggregatorsContext} from '../../Store.js';
-
-const electron = window.require('electron');
 
 
 function ExAddConfigs2(props){
-    
-    const [aggregators, setAggregators] = useContext(AggregatorsContext);
 
-
-    
-    function renderRightRemainingForm(){
+    function hasBootstraps(){
 
         if (props.methods.hyb ||  props.methods.hom){
             return(
-                <Card body>
-                <CardBody>
-                <FormGroup row>
-                    <Col>Boots</Col>
-                    <Col>Folds</Col>
-                    <Col>Seed</Col>
-                </FormGroup>  
-                </CardBody>
-                </Card>
+                <Col>
+                <FormGroup>
+                    <Label>Bootstraps</Label>
+                    <Input 
+                        type="number" 
+                        name="bootstraps"
+                        placeholder="Ex: 50" 
+                        innerRef={props.register({ required: true })}/>
+                </FormGroup> 
+                </Col>
             );
         }
 
-        else if (props.methods.sin ||  props.methods.het) {
-            return(
-                <Card body>
-                <CardBody>
-                <FormGroup row>
-                    <Col>Folds</Col>
-                    <Col>Seed</Col>
-                </FormGroup>  
-                </CardBody>
-                </Card>
-            );
-        }
-
-        return
     }
 
     
-    return(  
-        <>
-            {renderRightRemainingForm()}   
-        </>      
-    ); 
-    
+
+        if (props.methods.hyb ||  props.methods.hom ||
+            props.methods.sin ||  props.methods.het){
+            return(
+                <Card body>
+                <CardBody>
+                
+                <Row>
+                
+                {hasBootstraps()}
+                    
+                <Col>
+                <FormGroup>
+                    <Label>Folds</Label>
+                    <Input 
+                        type="number" 
+                        name="folds"
+                        placeholder="Ex: 5" 
+                        innerRef={props.register({ required: true })}/>
+                </FormGroup> 
+                </Col>
+
+                <Col>
+                <FormGroup>
+                    <Label>Seed</Label>
+                    <Input 
+                        type="number" 
+                        name="seed"
+                        placeholder="Ex: 42" 
+                        innerRef={props.register({ required: true })}/>
+                </FormGroup> 
+                </Col>
+                </Row>
+                </CardBody>
+                </Card>
+            );
+        } 
+
+        else {
+            return(<></>);
+        }
     
 }
 
