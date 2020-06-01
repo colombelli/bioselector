@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect, useState, useEffect } from 'react';
+import React, { useRef, useLayoutEffect, useState } from 'react';
 import {
     Card,
     CardBody,
@@ -16,6 +16,9 @@ import {ExperimentsContext} from '../../Store.js';
 import ExAddConfigs1 from './ExAddConfigs1.jsx';
 import ExAddConfigs2 from './ExAddConfigs2.jsx';
 import ExAddConfigs3 from './ExAddConfigs3.jsx';
+import ExAddDatasets from './ExAddDatasets.jsx';
+
+export const SelectedDatasetsContext = React.createContext({});
 
 function ExAdd(){
 
@@ -23,6 +26,7 @@ function ExAdd(){
     const [dimensions, setDimensions] = useState({ width:0, height: 0 });
     const [selectedMethod, setSelectedMethod] = useState(selectedMethodToggler());
     const {register, handleSubmit, unregister, getValues} = useForm();
+    const [selectedDatasets, setSelectedDatasets] = useState({});
     
   
     // holds the timer for setTimeout and clearInterval
@@ -111,8 +115,19 @@ function ExAdd(){
 
 
     const onSubmit = (data) => {
-        console.log("aaa")
-        console.log(data)
+
+        //if at least one dataset was selected
+        for (var id in selectedDatasets) {
+            if (selectedDatasets[id] === true) {
+                
+                console.log("do something")
+                console.log(data)
+            }
+        }
+
+        //else
+        //TO-DO
+        
     };
 
     return(
@@ -216,6 +231,14 @@ function ExAdd(){
             <ExAddConfigs3 
             methods={selectedMethod}
             register={register}/>
+        </Row>
+
+        <Row>
+            <SelectedDatasetsContext.Provider value={[selectedDatasets, setSelectedDatasets]}>
+            <ExAddDatasets 
+                methods={selectedMethod}
+                register={register}/>
+            </SelectedDatasetsContext.Provider>
         </Row>
 
         <Button>Submit</Button>
