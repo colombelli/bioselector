@@ -22,7 +22,8 @@ function ExAddConfigs2(props){
     }
 
     
-    function addAggregator(ensembleAggInfo){
+    function addAggregator(ensembleAggInfo) {
+        
         let path = ipcRenderer.sendSync('BROWSE_FILE_METHOD');
         if(path.length === 1){ // if some file was selected
             
@@ -32,21 +33,21 @@ function ExAddConfigs2(props){
             let values = ipcRenderer.sendSync("ASK_AGGREGATOR_INFO", ensembleAggInfo)
 
             if (values !== null && values.name){
-                console.log(values.name, values.level)
-            }
-            /*
-            if(props.methods.hyb){}
-            else{
-                let label = ipcRenderer.sendSync('ASK_SELECTOR_INFO', "label");
-                if(label === null){return};
-                let rankingFile = ipcRenderer.sendSync('ASK_SELECTOR_INFO', "ranking");
-                if(rankingFile === null){return};
                 
-                const newAggregator = {label: label, fileName: fileName};
-                const newAggregators = [...selectors];
-                newSelectors.push(newSelector);
-                setSelectors(newSelectors);
-            }*/
+                var newAgg = {label: values.name, fileName:fileName};
+                var newAggs = {...aggregators}
+                
+                
+                if(values.level === "1"){
+                    newAggs.lvl1.push(newAgg);
+                } else if (values.level === "2"){
+                    newAggs.lvl2.push(newAgg);
+                } else {
+                    newAggs.oneAgg.push(newAgg);
+                }
+                
+                setAggregators(newAggs);
+            }
         }
         return
     }
@@ -83,7 +84,7 @@ function ExAddConfigs2(props){
                     </Col>
                     </FormGroup>
                 </CardBody>
-                <Button color="secundary" onClick={addAggregator}>Add New</Button>
+                <Button color="secundary" onClick={() => addAggregator("oneAggInfo")}>Add New</Button>
                 </Card>
             </Col>
         );   
@@ -106,7 +107,7 @@ function ExAddConfigs2(props){
                     </Col>
                     </FormGroup>
                 </CardBody>
-                <Button color="secundary" onClick={addAggregator("hybAggInfo")}>Add New</Button>
+                <Button color="secundary" onClick={() => addAggregator("hybAggInfo")}>Add New</Button>
                 </Card>
             </Col>
         );
