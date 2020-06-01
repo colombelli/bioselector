@@ -68,13 +68,15 @@
         const { ipcRenderer } = require('electron');
 
         function newAggSubmitted() {
-            var name = document.getElementById("name").value;
+            var label = document.getElementById("label").value;
+            var ranking = document.getElementById("ranking").value;
+            
 
-            ipcRenderer.send('NEW_AGG_INFO_PROVIDED', {name: name});
+            ipcRenderer.send('NEW_SELECTOR_INFO_PROVIDED', {label: label, ranking: ranking});
         }
 
         function cancel() {
-            ipcRenderer.send('NEW_AGG_INFO_PROVIDED', null);
+            ipcRenderer.send('NEW_SELECTOR_INFO_PROVIDED', null);
         }
 
     </script>
@@ -82,12 +84,15 @@
   </head>
   <body>
     <form id="form" action="javascript:newAggSubmitted()">
-      <h1>Aggregator Info</h1>
+      <h1>Selector Info</h1>
       <div class="formcontainer">
       <hr/>
       <div class="container">
-        <label><strong>Aggregator Name</strong></label>
-        <input type="text" placeholder="Ex: Borda" id="name" required>
+        <label><strong>Selector name</strong></label>
+        <input type="text" placeholder="Ex: ReliefF" id="label" required>
+        <label><strong>Ranking file name</strong></label>
+        <input type="text" placeholder="Ex: rf (it'll be saved as rf.csv)" id="ranking" required>     
+
       </div>
         <button type="submit">OK</button>
         <div class="divider"></div>

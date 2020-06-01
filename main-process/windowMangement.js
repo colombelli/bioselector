@@ -83,27 +83,4 @@ ipcMain.on('BROWSE_FILE_METHOD', (event, args) => {
 });
 
 
-ipcMain.on('ASK_SELECTOR_INFO', (event, type) => {
-
-    var lab;
-
-    if(type === "label"){
-        lab = 'Selector Name:';
-    } else {
-        lab = 'Name for saving the ranking file:';
-    }
-
-    prompt({
-        title: 'Selector Info',
-        label: lab,
-        inputAttrs: {
-            type: 'text'
-        },
-    })
-    .then((r) => {
-        event.returnValue = r
-    })
-
-});
-
 

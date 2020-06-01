@@ -37,12 +37,13 @@ function ExAddConfigs1(props){
             let fileName = getFileNameFromPath(path[0]);
             let lang = getScriptLangFromPath(path[0]);
             
-            let label = ipcRenderer.sendSync('ASK_SELECTOR_INFO', "label");
-            if(label === null){return};
-            let rankingFile = ipcRenderer.sendSync('ASK_SELECTOR_INFO', "ranking");
-            if(rankingFile === null){return};
+            let values = ipcRenderer.sendSync('ASK_SELECTOR_INFO');
+            if(values === null){
+                return
+            }
             
-            const newSelector = {label: label, fileName: fileName, lang: lang, rankingFile: rankingFile};
+            const newSelector = {label: values.label, fileName: fileName, 
+                                lang: lang, rankingFile: values.ranking};
             const newSelectors = [...selectors];
             newSelectors.push(newSelector);
             setSelectors(newSelectors);
