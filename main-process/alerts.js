@@ -77,3 +77,37 @@ ipcMain.on('ASK_SELECTOR_INFO', (event, _) => {
         event.returnValue = selectorInfo;
     });
 });
+
+
+
+ipcMain.on('ASK_DATASET_INFO', (event, _) => {
+
+    const alertHtml = url.format({
+        pathname: path.join(__dirname, `../alert_views/datasetInfo.html`),
+        protocol: 'file:',
+        slashes: true,
+    });
+
+    alertWin = new BrowserWindow({
+        width: 317,
+        height: 296,
+        resizable: false,
+        frame: false,
+        show: true,
+		webPreferences: {
+			nodeIntegration: true,
+		},
+    });
+
+    alertWin.loadURL(alertHtml);
+
+    alertWin.on('closed', () => {
+        alertWin = null;
+    });
+
+
+    ipcMain.once('NEW_DATASET_INFO_PROVIDED', (_, datasetTitle) => {
+        alertWin.close();
+        event.returnValue = datasetTitle;
+    });
+});

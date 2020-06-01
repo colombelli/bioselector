@@ -32,8 +32,8 @@ function Datasets() {
 
           dsPaths.map((dsPath, index) => {
             updatedDatasets.push({
-              id: uuidv4(), 
-              title: ipcRenderer.sendSync('ASK_DATASET_TITLE', dsPath), 
+              id: uuidv4(),
+              title: ipcRenderer.sendSync('ASK_DATASET_INFO'), 
               path: dsPath})
           });
 
@@ -79,7 +79,7 @@ function Datasets() {
       if (changeable) {
         let updatedDatasets = datasets.map((dataset, index) => {
           if(dataset.id === id){
-            let title = ipcRenderer.sendSync('ASK_DATASET_TITLE', dataset.path);
+            let title = ipcRenderer.sendSync('ASK_DATASET_INFO');
             if(title !== null){dataset.title = title};
           }
           return dataset;
@@ -99,7 +99,7 @@ function Datasets() {
         
         let updatedDatasets = datasets.map((dataset, index) => {
           if(dataset.id === id){
-            let path = ipcRenderer.sendSync('BROWSE_FILE', dataset.path);
+            let path = ipcRenderer.sendSync('BROWSE_DATASET', dataset.path);
             if(path !== null){dataset.path = path};
           }
           return dataset
@@ -129,7 +129,7 @@ function Datasets() {
     
     
     function addDataset () {
-        ipcRenderer.send('BROWSE_FILES');
+        ipcRenderer.send('BROWSE_DATASETS');
     };
     
     

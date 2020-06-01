@@ -1,6 +1,5 @@
 const { ipcMain, BrowserWindow } = require('electron');
 const { dialog } = require('electron');
-const prompt = require('electron-prompt');
 
 ipcMain.on('MINIMIZE_WINDOW', (event, args) => {
 	var window = BrowserWindow.getFocusedWindow();
@@ -8,7 +7,7 @@ ipcMain.on('MINIMIZE_WINDOW', (event, args) => {
 });
 
 
-ipcMain.on('BROWSE_FILES', (event, args) => {
+ipcMain.on('BROWSE_DATASETS', (event, args) => {
 
     dialog.showOpenDialog(
         {   
@@ -29,7 +28,7 @@ ipcMain.on('BROWSE_FILES', (event, args) => {
 
 
 
-ipcMain.on('BROWSE_FILE', (event, args) => {
+ipcMain.on('BROWSE_DATASET', (event, args) => {
 
     dialog.showOpenDialog(
         {   
@@ -46,22 +45,6 @@ ipcMain.on('BROWSE_FILE', (event, args) => {
             event.returnValue = filename
         }
     )
-});
-
-
-ipcMain.on('ASK_DATASET_TITLE', (event, path) => {
-
-    prompt({
-        title: 'Choose Dataset Title',
-        label: path,
-        inputAttrs: { // attrs to be set if using 'input'
-            type: 'input'
-        }
-    })
-    .then((r) => {
-        event.returnValue = r
-    })
-
 });
 
 
