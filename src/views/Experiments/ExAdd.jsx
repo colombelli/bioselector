@@ -15,6 +15,7 @@ import {useForm} from "react-hook-form";
 import {ExperimentsContext} from '../../Store.js';
 import ExAddConfigs1 from './ExAddConfigs1.jsx';
 import ExAddConfigs2 from './ExAddConfigs2.jsx';
+import ExAddConfigs3 from './ExAddConfigs3.jsx';
 
 function ExAdd(){
 
@@ -209,6 +210,13 @@ function ExAdd(){
                 register={register} />
         
         </Row>
+
+        <Row>
+            <ExAddConfigs3 
+            methods={selectedMethod}
+            register={register}/>
+        </Row>
+
         <Button>Submit</Button>
         </Form>
     </div>
