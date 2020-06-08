@@ -1,4 +1,4 @@
-import React, { useRef, useLayoutEffect, useState } from 'react';
+import React, { useRef, useLayoutEffect, useState, useContext } from 'react';
 import {
     Card,
     CardBody,
@@ -12,7 +12,7 @@ import {
 
 import {useForm} from "react-hook-form";
 
-import {ExperimentsContext} from '../../Store.js';
+import {ExperimentsContext, DatasetsContext, SelectorsContext} from '../../Store.js';
 import ExAddConfigs1 from './ExAddConfigs1.jsx';
 import ExAddConfigs2 from './ExAddConfigs2.jsx';
 import ExAddConfigs3 from './ExAddConfigs3.jsx';
@@ -27,6 +27,9 @@ function ExAdd(){
     const [selectedMethod, setSelectedMethod] = useState(selectedMethodToggler());
     const {register, handleSubmit, unregister, getValues} = useForm();
     const [selectedDatasets, setSelectedDatasets] = useState({});
+
+    const [availableDatasets, ] = useContext(DatasetsContext);
+    const [availableSelectors, ] = useContext(SelectorsContext);
     
   
     // holds the timer for setTimeout and clearInterval
@@ -114,19 +117,108 @@ function ExAdd(){
     }
 
 
+    const getSelectedMethod = () => {
+
+        for (var method in selectedMethod){
+            if(selectedMethod[method] === true){
+                return method;
+            }
+        }
+    }
+
+
+    const getSelectorInfo = (selector) => {
+
+        const selectorDict = availableSelectors.find((sel, _) => {
+            if(sel.fileName === selector){
+                return sel;
+            }
+        });
+        
+        return [selectorDict.fileName, 
+                selectorDict.lang, 
+                selectorDict.rankingFile];
+    }
+
+
+    const getSelectors = (data, experimentType) => {
+
+        const selectors = [];
+
+        if((experimentType === "hom") || (experimentType === "sin")){
+            selectors.push(getSelectorInfo(data.selector));
+            return selectors
+        } else {  // hyb/het: more than one selector
+
+            for(let dataKey in data){
+                if(data[dataKey] === dataKey) {
+                    selectors.push(getSelectorInfo(dataKey));
+                }
+            }
+            return selectors;
+        }
+    }
+
+    const getAggregators = (data, experimentType) => {
+        
+        if(experimentType === "sin"){
+            return [" "];
+        } else if(experimentType === "hyb") {
+            return [data["lvl1"], data["lvl2"]];
+        } else {  // hom/het
+            return [data["oneAgg"]];
+        }
+    }
+
+
+    const getSelectedDatasets = () => {
+        
+        const paths = [];
+        for (let arrayElement in availableDatasets) {
+            
+            let dataset = availableDatasets[arrayElement]; 
+            let id = dataset["id"]; 
+            if (selectedDatasets[id]) {
+                paths.push(dataset["path"]);
+            }
+        }
+        return paths;
+    }
+
+
+    const mountExperimentDataStructure = (data) => {
+        
+        const experimentType = getSelectedMethod();
+        const selectors = getSelectors(data, experimentType);
+        const aggregators = getAggregators(data, experimentType);
+        const datasets = getSelectedDatasets();
+
+        const experiment = {
+            "type": experimentType,
+            "selectors": selectors,
+            "aggregators": aggregators,
+            "datasets": datasets,
+        }        
+        
+        return experiment;
+    }
+
+
     const onSubmit = (data) => {
 
         //if at least one dataset was selected
         for (var id in selectedDatasets) {
-            if (selectedDatasets[id] === true) {
+            if (selectedDatasets[id] === true) { // if at least one dataset was chosen, then do the magic
                 
-                console.log("do something")
-                console.log(data)
+                let experimentDS = mountExperimentDataStructure(data);
+                console.log(experimentDS)
+                //Redirect page
+                return;
             }
         }
 
         //else
-        //TO-DO
+        //TO-DO: "you must select at least one dataset to be part of the experiment"
         
     };
 
