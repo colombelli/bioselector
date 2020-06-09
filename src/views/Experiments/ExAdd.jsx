@@ -11,6 +11,7 @@ import {
 } from "reactstrap";
 
 import {useForm} from "react-hook-form";
+import { v4 as uuidv4 } from 'uuid';
 
 import {ExperimentsContext, DatasetsContext, SelectorsContext} from '../../Store.js';
 import ExAddConfigs1 from './ExAddConfigs1.jsx';
@@ -211,6 +212,8 @@ function ExAdd(){
             if (selectedDatasets[id] === true) { // if at least one dataset was chosen, then do the magic
                 
                 let experimentDS = mountExperimentDataStructure(data);
+                experimentDS["id"] = uuidv4();
+
                 
                 const newExperiments = {...experiments};
                 newExperiments["list"].push(experimentDS);
