@@ -9,14 +9,17 @@ import {
     Table
   } from "reactstrap";
 
-import {ExperimentsContext} from '../../Store';
+import {ExperimentsContext, DatasetsContext, SelectorsContext, AggregatorsContext} from '../../Store';
 
-var removable = false;
+var removable = true;
 var cursor = "auto";
 
 function ExRoot() {
 
     const [experiments, setExperiments] = useContext(ExperimentsContext);
+    const [datasets, ] = useContext(DatasetsContext);
+    const [selectors, ] = useContext(SelectorsContext);
+    const [aggregators, ] = useContext(AggregatorsContext);
     
     function addExperiments(){
 
@@ -34,31 +37,82 @@ function ExRoot() {
 
     const getExperimentTypeString = (type) => {
         
-        if("sin")
-            return "Single FS";
-        else if("hom")
-            return "Homogeneous";
-        else if("het")
-            return "Heterogeneous";
-        else if("hyb")
-            return "Hybrid";
+        switch(type){
+            case "sin": return "Single FS";
+            case "hom": return "Homogeneous";
+            case "het": return "Heterogeneous";
+            case "hyb": return "Hybrid";
+            default: return "";
+        }
+    }
 
-        else return "";
+
+    const getDatasetsTitlesByPath = (paths) => {   //yes, the id is being totally ignored, problem for the future
+
+        const datasetNames = [];
+        for (let ds in datasets){
+            if(paths.includes(datasets[ds].path))
+                datasetNames.push(datasets[ds].title);
+        }
+
+        let datasetsString = "";
+        for (let i in datasetNames){
+            datasetsString += datasetNames[i] + ", ";
+        }
+        
+        return datasetsString.slice(0, -2);  //chop the last ', ' characters
+    }
+
+    const getSelectorsLabelsByFileName = (fileNames) => {
+
+        const selectorLabels = [];
+        for (let sel in selectors){
+            if(fileNames.includes(selectors[sel].fileName))
+                selectorLabels.push(selectors[sel].label);
+        }
+
+        let selectorsString = "";
+        for (let i in selectorLabels){
+            selectorsString += selectorLabels[i] + ", ";
+        }
+
+        return selectorsString.slice(0, -2);
+    }
+
+    const getAggregatorsLabelsByFileName = (fileNames) => {
+        
+        const aggregatorLabels = [];
+        for (let typeAgg in aggregators){
+            for (let i in aggregators[typeAgg]){
+                if(fileNames.includes(aggregators[typeAgg][i].fileName) &&
+                    !aggregatorLabels.includes(aggregators[typeAgg][i].label))
+                        aggregatorLabels.push(aggregators[typeAgg][i].label);
+                 //not so optimized but works
+            }
+        }
+
+        let aggregatorsString = "";
+        for (let i in aggregatorLabels){
+            aggregatorsString += aggregatorLabels[i] + ", ";
+        }
+
+        return aggregatorsString.slice(0, -2);
     }
 
 
     const renderExperiments = () => {
 
             return experiments["list"].map((experiment, index) => {
-                const { type, selectors, aggregators, datasets, id } = experiment
-        
+                let { type, selectors, aggregators, datasets, id } = experiment
+                let exSelectorsFileNames = selectors.map((lst) => {return lst[0]});
+
                 return (
                     <tr key={id} id={id} onClick={() => removeExperiment(id)}
                     style={{cursor: cursor}}>
                         <td>{getExperimentTypeString(type)}</td>
-                        <td>datasets</td>
-                        <td>selectors</td>
-                        <td>aggregators</td>
+                        <td>{getDatasetsTitlesByPath(datasets)}</td>
+                        <td>{getSelectorsLabelsByFileName(exSelectorsFileNames)}</td>
+                        <td>{getAggregatorsLabelsByFileName(aggregators)}</td>
                     </tr>
                )
             })
@@ -132,7 +186,9 @@ function ExRoot() {
             <CardBody>
 
                 <Table 
-                hover={true}>
+                striped={!removable}
+                hover={removable}
+                bordered={removable}>
                     <thead className="text-success">
                     <tr>
                         <th>TYPE</th>
