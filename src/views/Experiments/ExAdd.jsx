@@ -30,7 +30,7 @@ function ExAdd(){
 
     const [availableDatasets, ] = useContext(DatasetsContext);
     const [availableSelectors, ] = useContext(SelectorsContext);
-    
+    const [experiments, setExperiments] = useContext(ExperimentsContext);
   
     // holds the timer for setTimeout and clearInterval
     let movement_timer = null;
@@ -211,8 +211,11 @@ function ExAdd(){
             if (selectedDatasets[id] === true) { // if at least one dataset was chosen, then do the magic
                 
                 let experimentDS = mountExperimentDataStructure(data);
-                console.log(experimentDS)
-                //Redirect page
+                
+                const newExperiments = {...experiments};
+                newExperiments["list"].push(experimentDS);
+                newExperiments["view"] = "root";
+                setExperiments(newExperiments)
                 return;
             }
         }

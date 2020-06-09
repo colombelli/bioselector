@@ -14,7 +14,9 @@ import {ExperimentsContext} from '../../Store';
 function ExRoot() {
 
     const [experiments, setExperiments] = useContext(ExperimentsContext);
-
+    console.log("yoooo");
+    console.log(experiments);
+    
     function addExperiments(){
 
         const expList = [...experiments.list];
