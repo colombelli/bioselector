@@ -36,7 +36,7 @@ function ExAddDatasets(props){
                     <td className="text-right">{path}</td>
                 </tr>
         )
-        })
+        });
 
     };
 

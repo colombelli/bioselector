@@ -17,6 +17,8 @@
 
 */
 import React from "react";
+
+/*
 import { Link } from "react-router-dom";
 import {
   Collapse,
@@ -35,6 +37,8 @@ import {
   InputGroupAddon,
   Input
 } from "reactstrap";
+*/
+import {Navbar, NavbarBrand, Container} from "reactstrap";
 
 import routes from "routes.js";
 

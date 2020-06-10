@@ -16,23 +16,71 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import Dashboard from "views/Dashboard.jsx";
+
 import Notifications from "views/Notifications.jsx";
 import Icons from "views/Icons.jsx";
-import Typography from "views/Typography.jsx";
-import TableList from "views/Tables.jsx";
 import UserPage from "views/User.jsx";
+
+import Project from "views/Project.jsx";
 import Datasets from "views/Datasets.jsx";
 import Experiments from "views/Experiments/Experiments.jsx";
+import Analysis from "views/Analysis.jsx";
+import Selection from "views/Selection.jsx";
+import Classifier from "views/Classifier.jsx";
+import Guide from "views/Guide.jsx";
 
 var routes = [
   {
-    path: "/dashboard",
-    name: "Dashboard",
-    icon: "nc-icon nc-bank",
-    component: Dashboard,
+    path: "/project",
+    name: "Project",
+    icon: "nc-icon nc-paper",
+    component: Project,
     layout: "/index"
   },
+  {
+    path: "/datasets",
+    name: "Datasets",
+    icon: "nc-icon nc-bullet-list-67",
+    component: Datasets,
+    layout: "/index"
+  },
+  {
+    path: "/experiments",
+    name: "Experiments",
+    icon: "nc-icon nc-atom",
+    component: Experiments,
+    layout: "/index"
+  },
+  {
+    path: "/analysis",
+    name: "Analysis",
+    icon: "nc-icon nc-chart-pie-36",
+    component: Analysis,
+    layout: "/index"
+  },
+  {
+    path: "/selection",
+    name: "Selection",
+    icon: "nc-icon nc-bulb-63",
+    component: Selection,
+    layout: "/index"
+  },
+  {
+    path: "/classifier",
+    name: "Classifier",
+    icon: "nc-icon nc-compass-05",
+    component: Classifier,
+    layout: "/index"
+  },
+  {
+    path: "/guide",
+    name: "Guide",
+    icon: "nc-icon nc-hat-3",
+    component: Guide,
+    layout: "/index"
+  },
+
+
   {
     path: "/icons",
     name: "Icons",
@@ -54,34 +102,7 @@ var routes = [
     component: UserPage,
     layout: "/index"
   },
-  {
-    path: "/tables",
-    name: "Table List",
-    icon: "nc-icon nc-tile-56",
-    component: TableList,
-    layout: "/index"
-  },
-  {
-    path: "/typography",
-    name: "Typography",
-    icon: "nc-icon nc-caps-small",
-    component: Typography,
-    layout: "/index"
-  },
-  {
-    path: "/datasets",
-    name: "Datasets",
-    icon: "nc-icon nc-bullet-list-67",
-    component: Datasets,
-    layout: "/index"
-  },
-  {
-    path: "/experiments",
-    name: "Experiments",
-    icon: "nc-icon nc-atom",
-    component: Experiments,
-    layout: "/index"
-  },
+
 
 ];
 export default routes;

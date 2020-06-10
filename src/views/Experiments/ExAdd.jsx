@@ -340,6 +340,11 @@ function ExAdd(){
         </Row>
 
         <Button>Submit</Button>
+        <Button onClick={()=>{
+            let updatedExperiments = {...experiments};
+            updatedExperiments["view"] = "root";
+            setExperiments(updatedExperiments);
+        }}>Cancel</Button>
         </Form>
     </div>
         
