@@ -21,7 +21,7 @@ ipcMain.on('BROWSE_DATASETS', (event, args) => {
             if (filename === undefined) {
                 return;
             }
-            event.sender.send('LOADED_FILE', filename);
+            event.returnValue = filename;
         }
     )
 });
@@ -42,7 +42,7 @@ ipcMain.on('BROWSE_DATASET', (event, args) => {
             if (filename === undefined) {
                 return;
             }
-            event.returnValue = filename
+            event.returnValue = filename;
         }
     )
 });
@@ -60,7 +60,7 @@ ipcMain.on('BROWSE_FILE_METHOD', (event, args) => {
             ] 
         },
         (filename) => {
-            event.returnValue = filename
+            event.returnValue = filename;
         }
     )
 });

@@ -27,19 +27,6 @@ function Datasets() {
     const [, forceUpdate] = useReducer(x => x + 1, 0);
     
       //Set listeners
-      ipcRenderer.once('LOADED_FILE', (event, dsPaths) => {
-        const updatedDatasets = [...datasets];
-
-          dsPaths.map((dsPath, index) => {
-            updatedDatasets.push({
-              id: uuidv4(),
-              title: ipcRenderer.sendSync('ASK_DATASET_INFO'), 
-              path: dsPath})
-          });
-
-        setDatasets(updatedDatasets);
-      });
-
       /*
       ipcRenderer.on('deleteDatasetBG_MESSAGE', (event, args) => {
           console.log("received a message from background")
@@ -51,8 +38,7 @@ function Datasets() {
           console.log(args)
       });
       */
-
-
+     
 
 
     function removeRow(id) {
@@ -67,7 +53,6 @@ function Datasets() {
           });
     
           setDatasets(updatedDatasets);
-    
       } else {
           return;
       };
@@ -86,7 +71,6 @@ function Datasets() {
         });
       
         setDatasets(updatedDatasets);
-
       } else {
         return;
       };
@@ -106,7 +90,6 @@ function Datasets() {
         });
       
         setDatasets(updatedDatasets);
-      
       } else {
         return;
       };
@@ -127,9 +110,24 @@ function Datasets() {
     };
     
     
-    
     function addDataset () {
-        ipcRenderer.send('BROWSE_DATASETS');
+        
+      let datasetPaths = ipcRenderer.sendSync('BROWSE_DATASETS');
+      const updatedDatasets = [...datasets];
+
+      datasetPaths.forEach(datasetPath => {
+
+        let title = ipcRenderer.sendSync('ASK_DATASET_INFO');
+        if (
+          (title !== null) && (title.length > 0)) { // if it received a title
+
+            updatedDatasets.push({
+              id: uuidv4(),
+              title: title,
+              path: datasetPath})
+        }
+      });
+      setDatasets(updatedDatasets);
     };
     
     
@@ -144,16 +142,9 @@ function Datasets() {
       removable = !removable;
       changeable = false;
       forceUpdate();
-
-    
-      /*
-      console.log('deleting')
-      const datasetID = 'saf132fnj'
-      ipcRenderer.send('deleteDataset', datasetID);
-      */
-    
     };
     
+
     function changeDataset() {
     
       let updatedCursor;
@@ -168,7 +159,6 @@ function Datasets() {
       changeable = !changeable;
       cursor = updatedCursor;
       forceUpdate();
-      //ipcRenderer.send('count-win', 'a')
     };
     
   
