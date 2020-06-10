@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useReducer } from 'react';
 import {
     Card,
     CardBody,
@@ -11,7 +11,7 @@ import {
 
 import {ExperimentsContext, DatasetsContext, SelectorsContext, AggregatorsContext} from '../../Store';
 
-var removable = true;
+var removable = false;
 var cursor = "auto";
 
 function ExRoot() {
@@ -20,6 +20,7 @@ function ExRoot() {
     const [datasets, ] = useContext(DatasetsContext);
     const [selectors, ] = useContext(SelectorsContext);
     const [aggregators, ] = useContext(AggregatorsContext);
+    const [, forceUpdate] = useReducer(x => x + 1, 0);
     
     function addExperiments(){
 
@@ -31,7 +32,21 @@ function ExRoot() {
 
 
     const removeExperiment = (id) => {
-        return
+        if (removable) {
+          
+            let updatedExperiments = {view: "root", list: []};
+
+            experiments["list"].forEach(element => {
+                if(element.id !== id){
+                    updatedExperiments["list"].push(element);
+                  };
+              });
+            setExperiments(updatedExperiments);
+        }
+      
+        else {
+            return;
+        };
     }
 
 
@@ -153,7 +168,16 @@ function ExRoot() {
                     </Col>
                     
                     <Col>
-                        <div onClick ={() => {}}>
+                        <div onClick ={() => {
+                                removable = !removable;
+                                switch(cursor){
+                                    case "auto": cursor = "pointer"; break;
+                                    case "pointer": cursor = "auto"; break;
+                                    default: cursor = "auto"; break;
+                                }
+                                forceUpdate();
+                            
+                        }}>
                         <Card className="card-button add">
                         <CardBody>
                         <Row>
