@@ -1,4 +1,4 @@
-import React, { useContext, useReducer } from 'react';
+import React, { useContext, useReducer, useState } from 'react';
 import {
     Card,
     CardBody,
@@ -6,7 +6,8 @@ import {
     CardTitle,
     Row,
     Col,
-    Table
+    Table,
+    Button
   } from "reactstrap";
 
 import {ExperimentsContext, DatasetsContext, SelectorsContext, AggregatorsContext} from '../../Store';
@@ -20,6 +21,7 @@ function ExRoot() {
     const [datasets, ] = useContext(DatasetsContext);
     const [selectors, ] = useContext(SelectorsContext);
     const [aggregators, ] = useContext(AggregatorsContext);
+    const [resultsPath, setResultsPath] = useState("");
     const [, forceUpdate] = useReducer(x => x + 1, 0);
     
     function addExperiments(){
@@ -131,7 +133,32 @@ function ExRoot() {
                     </tr>
                )
             })
+    }
 
+
+
+    const selectResultsPath = () => {
+        
+    }
+
+
+
+    const showButton = () => {
+
+        if (experiments.list.length === 0) {
+            return (
+                <Row>
+                    <Card body>
+                        Current Results' Path: {resultsPath}
+                        <CardBody>
+                            <Button>Select Results Path</Button>
+                            <Button>Run!</Button>
+                        </CardBody>
+                    </Card>
+                </Row>
+            )
+
+        } else { return <></>}
 
     }
     
@@ -229,6 +256,9 @@ function ExRoot() {
             </CardBody>
             </Card>
             </Row>
+
+
+            {showButton()}
 
             </div>
         </>

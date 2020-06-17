@@ -79,7 +79,7 @@ var routes = [
     component: Guide,
     layout: "/index"
   },
-
+/*
 
   {
     path: "/icons",
@@ -102,7 +102,7 @@ var routes = [
     component: UserPage,
     layout: "/index"
   },
-
+*/
 
 ];
 export default routes;
