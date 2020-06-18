@@ -27,22 +27,7 @@ After more testing and a formal paper submission, this README will be updated wi
 
 ## Screenshots
 
- <div class="row">
-  <div class="col">
-    <img src="./Screenshots/datasets.png" width="40%" height="40%"/>
-  </div>
-  <div class="col">
-    <img src="./Screenshots/datasets-format.png" width="40%" height="40%"/>
-  </div>
-  <div class="col">
-    <img src="./Screenshots/experiments-add.png" width="40%" height="40%"/>
-  </div>
-  <div class="col">
-    <img src="./Screenshots/experiments-root.png" width="40%" height="40%"/>
-  </div>
-</div> 
-
-
+<img src="./Screenshots/datasets.png" width="40%" height="40%"/><img src="./Screenshots/datasets-format.png" width="40%" height="40%"/><img src="./Screenshots/experiments-add.png" width="40%" height="40%"/><img src="./Screenshots/experiments-root.png" width="40%" height="40%"/>
 
 
 [creative-tim]: https://www.creative-tim.com/
