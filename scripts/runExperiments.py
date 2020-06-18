@@ -1,12 +1,16 @@
 import sys
 import time
 
-experiment = sys.argv[1]
-resultsPath = sys.argv[2]
+print("11111", sys.argv[1])
+sys.stdout.flush()
+
+print("2222", sys.argv[2])
+sys.stdout.flush()
+
 
 for i in range(1,4):
-	print("loading..", i)
-    print(resultsPath)
-	print(data)
+	print("deleting..", i)
 	sys.stdout.flush()
 	time.sleep(2.3)
+
+

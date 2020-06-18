@@ -17,6 +17,8 @@
                 ipcRenderer.send(bgTask.concat('MESSAGE'), { message: results });
             });
 
+            ipcRenderer.send(bgTask.concat('MESSAGE'), { message: args });
+
             pyshell.end(function (err,code,signal) {
                 if (err) {
                     ipcRenderer.send(bgTask.concat('ERR'), err);

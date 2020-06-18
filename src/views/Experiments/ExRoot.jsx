@@ -36,14 +36,16 @@ function ExRoot() {
         setExperiments({view: addExperimentView, list: expList});
     }
 
+    ipcRenderer.removeAllListeners('runExperimentsBG_MESSAGE');
+    ipcRenderer.removeAllListeners('runExperimentsERR');
 
     ipcRenderer.on('runExperimentsBG_MESSAGE', (event, message) => {
         console.log("received a message from background")
         console.log(message)
     });
 
-    ipcRenderer.on('loadDatasetBG_MESSAGE', (event, message) => {
-        console.log("received a message from background loadd")
+    ipcRenderer.on('runExperimentsERR', (event, message) => {
+        console.log("received a ERR from background")
         console.log(message)
     });
 
@@ -169,8 +171,8 @@ function ExRoot() {
             return
         } else {
             console.log('go!');
-            setRunningExperiments(true);
-            ipcRenderer.send('runExperiments', [experiments, resultsPath]);
+            setRunningExperiments(false);//TRUE!!
+            ipcRenderer.send('runExperiments', [experiments.list, resultsPath]);
             ipcRenderer.send('loadDatasets');
         }
     }
@@ -179,7 +181,8 @@ function ExRoot() {
 
     const showButton = () => {
 
-        if (experiments.list.length > 0) {
+        //if (experiments.list.length > 0) {
+            if (true) {
             return (
                 <Row>
                     <Card body>
