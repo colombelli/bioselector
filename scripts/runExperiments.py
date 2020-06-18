@@ -1,6 +1,10 @@
 import sys
 import time
 
+from engine import DataManager
+
+print(DataManager)
+
 print("11111", sys.argv[1])
 sys.stdout.flush()
 
