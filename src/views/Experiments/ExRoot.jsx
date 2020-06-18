@@ -10,7 +10,8 @@ import {
     Button
   } from "reactstrap";
 
-import {ExperimentsContext, DatasetsContext, SelectorsContext, AggregatorsContext} from '../../Store';
+import {ExperimentsContext, DatasetsContext, 
+    SelectorsContext, AggregatorsContext, RunningExperimentsContext} from '../../Store';
 const { ipcRenderer } = window.require('electron');
 
 
@@ -23,6 +24,7 @@ function ExRoot() {
     const [datasets, ] = useContext(DatasetsContext);
     const [selectors, ] = useContext(SelectorsContext);
     const [aggregators, ] = useContext(AggregatorsContext);
+    const [runningExperiments, setRunningExperiments] = useContext(RunningExperimentsContext);
     const [resultsPath, setResultsPath] = useState("");
     const [, forceUpdate] = useReducer(x => x + 1, 0);
     
@@ -33,6 +35,18 @@ function ExRoot() {
         
         setExperiments({view: addExperimentView, list: expList});
     }
+
+
+    ipcRenderer.on('runExperimentsBG_MESSAGE', (event, message) => {
+        console.log("received a message from background")
+        console.log(message)
+    });
+
+    ipcRenderer.on('loadDatasetBG_MESSAGE', (event, message) => {
+        console.log("received a message from background loadd")
+        console.log(message)
+    });
+
 
 
     const removeExperiment = (id) => {
@@ -149,6 +163,20 @@ function ExRoot() {
 
 
 
+    const runExperiments = () => {
+
+        if (runningExperiments){
+            return
+        } else {
+            console.log('go!');
+            setRunningExperiments(true);
+            ipcRenderer.send('runExperiments', [experiments, resultsPath]);
+            ipcRenderer.send('loadDatasets');
+        }
+    }
+
+
+
     const showButton = () => {
 
         if (experiments.list.length > 0) {
@@ -159,7 +187,7 @@ function ExRoot() {
                         <p>{resultsPath}</p>
                         <CardBody>
                             <Button onClick={selectResultsPath}>Select Results Path</Button>
-                            <Button>Run!</Button>
+                            <Button onClick={runExperiments}>Run!</Button>
                         </CardBody>
                     </Card>
                 </Row>

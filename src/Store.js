@@ -21,6 +21,7 @@ export const DatasetsContext = React.createContext([]);
 export const ExperimentsContext = React.createContext({view: "root", list: []});
 export const SelectorsContext = React.createContext(availableSelectors);
 export const AggregatorsContext = React.createContext(availableAggregators);
+export const RunningExperimentsContext = React.createContext(false);
 //export const SelectedDatasetsContext = React.createContext({});
 
 const Store = ({children}) => {
@@ -28,6 +29,7 @@ const [datasets, setDatasets] = useState([]);
 const [experiments, setExperiments] = useState({view: "root", list: []});
 const [selectors, setSelectors] = useState(availableSelectors);
 const [aggregators, setAggregators] = useState(availableAggregators);
+const [runningExperiments, setRunningExperiments] = useState(false);
 //const [selectedDatasets, setSelectedDatasets] = useState({});
     
 //<SelectedDatasetsContext.Provider value={[selectedDatasets, setSelectedDatasets]}>
@@ -38,9 +40,11 @@ const [aggregators, setAggregators] = useState(availableAggregators);
         <ExperimentsContext.Provider value={[experiments, setExperiments]}>
         <SelectorsContext.Provider value={[selectors, setSelectors]}>
         <AggregatorsContext.Provider value={[aggregators, setAggregators]}>
+        <RunningExperimentsContext.Provider value={[runningExperiments, setRunningExperiments]}>
         
             {children}
         
+        </RunningExperimentsContext.Provider>
         </AggregatorsContext.Provider>
         </SelectorsContext.Provider>
         </ExperimentsContext.Provider>
