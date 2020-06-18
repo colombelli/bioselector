@@ -11,6 +11,8 @@ import {
   } from "reactstrap";
 
 import {ExperimentsContext, DatasetsContext, SelectorsContext, AggregatorsContext} from '../../Store';
+const { ipcRenderer } = window.require('electron');
+
 
 var removable = false;
 var cursor = "auto";
@@ -138,20 +140,25 @@ function ExRoot() {
 
 
     const selectResultsPath = () => {
-        
+        const path = ipcRenderer.sendSync("BROWSE_PATH");
+        if (path) {
+            setResultsPath(path[0]);
+        }
+        return;
     }
 
 
 
     const showButton = () => {
 
-        if (experiments.list.length === 0) {
+        if (experiments.list.length > 0) {
             return (
                 <Row>
                     <Card body>
-                        Current Results' Path: {resultsPath}
+                        Current Results Path: 
+                        <p>{resultsPath}</p>
                         <CardBody>
-                            <Button>Select Results Path</Button>
+                            <Button onClick={selectResultsPath}>Select Results Path</Button>
                             <Button>Run!</Button>
                         </CardBody>
                     </Card>

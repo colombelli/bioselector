@@ -66,4 +66,18 @@ ipcMain.on('BROWSE_FILE_METHOD', (event, args) => {
 });
 
 
+ipcMain.on('BROWSE_PATH', (event, args) => {
+
+    dialog.showOpenDialog(
+        {   
+            title: "Select Path",
+            properties: ['openDirectory'],
+        },
+        (folder) => {
+            event.returnValue = folder;
+        }
+    )
+});
+
+
 
