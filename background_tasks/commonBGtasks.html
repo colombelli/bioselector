@@ -10,14 +10,13 @@
 
             let pyshell = new PythonShell(path.join(__dirname, `/../scripts/${bgTask}.py`), {
                 pythonPath: 'python3',
-                args: args
+                args: JSON.stringify(args)
             });
 
             pyshell.on('message', function(results) {
                 ipcRenderer.send(bgTask.concat('MESSAGE'), { message: results });
             });
 
-            ipcRenderer.send(bgTask.concat('MESSAGE'), { message: args });
 
             pyshell.end(function (err,code,signal) {
                 if (err) {

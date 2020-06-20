@@ -47,15 +47,6 @@ function createCommonIPCmain(bgTask) {
 			hiddenWindow = null;
 		});
 
-		ipcMain.once(bgTask.concat('FINISHED'), (event, args) => {
-			hiddenWindow.close()
-		});
-
-		ipcMain.once(bgTask.concat('ERR'), (event, args) => {
-			//handle error
-			hiddenWindow.close()
-		});
-
 		cache.args = args;
 	});
 
@@ -64,6 +55,15 @@ function createCommonIPCmain(bgTask) {
 	// from the background renderer process
 	ipcMain.on(bgTask.concat('MESSAGE'), (event, args) => {
 		sender.send(bgTask.concat('BG_MESSAGE'), args.message);
+	});
+
+
+	ipcMain.on(bgTask.concat('ERR'), (event, args) => {
+		sender.send(bgTask.concat('ERR'), args);
+	});
+
+	ipcMain.on(bgTask.concat('FINISHED'), (event, args) => {
+		sender.send(bgTask.concat('FINISHED'), args);
 	});
 
 

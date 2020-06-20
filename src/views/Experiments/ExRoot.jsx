@@ -38,6 +38,7 @@ function ExRoot() {
 
     ipcRenderer.removeAllListeners('runExperimentsBG_MESSAGE');
     ipcRenderer.removeAllListeners('runExperimentsERR');
+    ipcRenderer.removeAllListeners('runExperimentsFINISHED');
 
     ipcRenderer.on('runExperimentsBG_MESSAGE', (event, message) => {
         console.log("received a message from background")
@@ -46,6 +47,11 @@ function ExRoot() {
 
     ipcRenderer.on('runExperimentsERR', (event, message) => {
         console.log("received a ERR from background")
+        console.log(message)
+    });
+
+    ipcRenderer.on('runExperimentsFINISHED', (event, message) => {
+        console.log("received a FINISH from background")
         console.log(message)
     });
 
