@@ -16,7 +16,7 @@ class BioSExperiments:
     def __init__(self, experiments, results_path):
 
         self.experiments = experiments
-        self.results_path = results_path
+        self.results_path = results_path + "/"
         self.ths = [1, 5, 10, 15]   # i forgot to add those in the frontend, so for now they're fixed
 
 

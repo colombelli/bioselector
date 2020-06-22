@@ -187,18 +187,39 @@ function ExAdd(){
     }
 
 
+    const getAdditionalInfo = (data) => {
+        
+        var folds = data["folds"];
+        var seed = data["seed"];
+        var bootstraps;
+        
+        try {
+            bootstraps = data["bootstraps"]
+            if (!bootstraps) // undefined
+                throw("bs err");
+        } catch(e) {
+            bootstraps = 0;
+        }
+        return {folds, seed, bootstraps}
+    }
+
+
     const mountExperimentDataStructure = (data) => {
         
         const experimentType = getSelectedMethod();
         const selectors = getSelectors(data, experimentType);
         const aggregators = getAggregators(data, experimentType);
         const datasets = getSelectedDatasets();
+        const {folds, seed, bootstraps} = getAdditionalInfo(data)
 
         const experiment = {
             "type": experimentType,
             "selectors": selectors,
             "aggregators": aggregators,
             "datasets": datasets,
+            "folds": folds,
+            "seed": seed,
+            "bootstraps": bootstraps
         }        
         
         return experiment;

@@ -15,5 +15,11 @@ input_data = json.loads(args)
 experiments = input_data[0]
 results_path = input_data[1]
 
+print(experiments)
+sys.stdout.flush()
+
+print(results_path)
+sys.stdout.flush()
+
 
 
