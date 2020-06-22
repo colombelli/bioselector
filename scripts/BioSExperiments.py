@@ -1,5 +1,15 @@
 import sys
 import os
+from time import time
+
+from engine.DataManager import DataManager
+from engine.Hybrid import Hybrid
+from engine.Heterogeneous import Heterogeneous
+from engine.Homogeneous import Homogeneous
+from engine.SingleFS import SingleFS
+from engine.Evaluator import Evaluator
+from engine.InformationManager import InformationManager
+
 
 class BioSExperiments:
 
@@ -11,7 +21,7 @@ class BioSExperiments:
 
 
 
-    def mount_experiment_folder_name(self, i, count, exp):
+    def mount_experiment_folder_name(self, i, count, exp, ds_path):
 
         sufix = "_E" + str(count+i) + "/"
         rad = exp.type
@@ -32,74 +42,75 @@ class BioSExperiments:
 
 
         for i, exp in enumerate(self.experiments):
+            for dataset_path in exp.datasets:
             
-            exp_name = self.mount_experiment_folder_name(i, exp_count, exp)
-            results_path = self.results_path + exp_name
+                exp_name = self.mount_experiment_folder_name(i, exp_count, exp, dataset_path)
+                complete_results_path = self.results_path + exp_name
 
-            if exp.type == 'sin':
-                print("a")
-                #self.perform_selection_single()
+                if exp.type == 'sin':
+                    self.perform_selection_single(dataset_path, complete_results_path, exp.selectors,
+                                                    exp.num_folds, exp.seed, self.ths)
 
-            elif exp.type == 'hom':
-                print("a")
-            elif exp.type == 'het':
-                print("a")
-            elif exp.type == 'hyb':
-                print("a")
+                elif exp.type == 'hom':
+                    print("a")
+                elif exp.type == 'het':
+                    print("a")
+                elif exp.type == 'hyb':
+                    print("a")
         return
-
 
 
     def compute_print_time(self, st):
         
-    print("\n\nTIME TAKEN:")
-    end = time()
-    try:
-        hours, rem = divmod(end-st, 3600)
-        minutes, seconds = divmod(rem, 60)
- 
-        print("{:0>2}:{:0>2}:{:05.2f}".format(int(hours),int(minutes),seconds))
-    except:
-        print(end-st)
+        print("\n\nTIME TAKEN:")
+        end = time()
+        try:
+            hours, rem = divmod(end-st, 3600)
+            minutes, seconds = divmod(rem, 60)
     
-    sys.stdout.flush()
-    return
-
-
-    def perform_selection_hyb(dataset_path, results_path, aggregator1, aggregator2):
+            print("{:0>2}:{:0>2}:{:05.2f}".format(int(hours),int(minutes),seconds))
+        except:
+            print(end-st)
         
-    str_aggregators = [aggregator1, aggregator2]
+        sys.stdout.flush()
+        return
 
-    dm = DataManager(results_path, dataset_path, num_bootstraps, num_folds, seed)
-    dm.encode_main_dm_df()
-    dm.create_results_dir()
-    dm.init_data_folding_process()
+    """
 
-    ev = Evaluator(dm, ths, False)
-    im = InformationManager(dm, ev, str_methods, str_aggregators)
-    ensemble = Hybrid(dm, fs_methods, aggregator1, aggregator2, ths)
+    def perform_selection_hyb(self, dataset_path, results_path, aggregator1, aggregator2):
+        
+        str_aggregators = [aggregator1, aggregator2]
 
-    st = time()
-    ensemble.select_features()
-    compute_print_time(st)
+        dm = DataManager(results_path, dataset_path, num_bootstraps, num_folds, seed)
+        dm.encode_main_dm_df()
+        dm.create_results_dir()
+        dm.init_data_folding_process()
 
-    print("\n\nDecoding dataframe...")
-    dm.decode_main_dm_df()
-    print("\nStarting evaluation process...")
-    ev.evaluate_final_rankings()
+        ev = Evaluator(dm, ths, False)
+        im = InformationManager(dm, ev, str_methods, str_aggregators)
+        ensemble = Hybrid(dm, fs_methods, aggregator1, aggregator2, ths)
 
-    print("\n\nCreating csv files...")
-    im.create_csv_tables()
+        st = time()
+        ensemble.select_features()
+        compute_print_time(st)
 
-    print("\nEvaluating inner levels...")
-    level1_evaluation, level2_evaluation = ev.evaluate_intermediate_hyb_rankings()
+        print("\n\nDecoding dataframe...")
+        dm.decode_main_dm_df()
+        print("\nStarting evaluation process...")
+        ev.evaluate_final_rankings()
 
-    print("\n\nCreating csv files...")
-    im.create_intermediate_csv_tables(level1_evaluation, level2_evaluation)
+        print("\n\nCreating csv files...")
+        im.create_csv_tables()
 
-    print("\nDone!\n\n")
-    print("#################################################################\n")
-    return
+        print("\nEvaluating inner levels...")
+        level1_evaluation, level2_evaluation = ev.evaluate_intermediate_hyb_rankings()
+
+        print("\n\nCreating csv files...")
+        im.create_intermediate_csv_tables(level1_evaluation, level2_evaluation)
+
+        print("\nDone!\n\n")
+        print("#################################################################\n")
+        return
 
 
 
@@ -165,14 +176,14 @@ class BioSExperiments:
         print("#################################################################\n")
         return
 
-
+    """
 
     def perform_selection_single(self, dataset_path, results_path, 
-                                selectors, fs_method, num_folds, seed, ths):
+                                selector, num_folds, seed, ths):
 
         str_aggregators = ["No aggregation"]
         num_bootstraps = 0
-        selectors_str = selectors[0][0]    # because selectors is always a list, even when it have only one element
+        selectors_str = selector[0][0]    # because selector is always a list, even when it have only one element
 
         dm = DataManager(results_path, dataset_path, num_bootstraps, num_folds, seed)
         dm.encode_main_dm_df()
@@ -180,12 +191,12 @@ class BioSExperiments:
         dm.init_data_folding_process()
 
         ev = Evaluator(dm, ths, False)
-        im = InformationManager(dm, ev, str_methods, str_aggregators)
-        feature_selector = SingleFS(dm, fs_method, ths)
+        im = InformationManager(dm, ev, selectors_str, str_aggregators)
+        feature_selector = SingleFS(dm, selector, ths)
 
         st = time()
         feature_selector.select_features()
-        compute_print_time(st)
+        self.compute_print_time(st)
 
         print("\n\nDecoding dataframe...")
         sys.stdout.flush()
