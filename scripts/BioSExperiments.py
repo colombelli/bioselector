@@ -61,7 +61,10 @@ class BioSExperiments:
                                                 int_bootstraps, int_seed, self.ths)
 
                 elif exp.type == 'het':
-                    print("a")
+                    self.perform_selection_het(dataset_path, complete_results_path,
+                                                exp.selectors, exp.aggregators[0], int_folds,
+                                                int_seed, self.ths)
+                    
                 elif exp.type == 'hyb':
                     print("a")
         return
@@ -119,12 +122,13 @@ class BioSExperiments:
         print("#################################################################\n")
         return
 
+    """
 
-
-    def perform_selection_het(dataset_path, results_path, aggregator):
+    def perform_selection_het(self, dataset_path, results_path, selectors, 
+                                aggregator, num_folds, seed, ths):
 
         str_aggregators = [aggregator]
-
+        str_selectors = [i[0]+", " for i in selectors]
         num_bootstraps = 0
 
         dm = DataManager(results_path, dataset_path, num_bootstraps, num_folds, seed)
@@ -133,26 +137,31 @@ class BioSExperiments:
         dm.init_data_folding_process()
         
         ev = Evaluator(dm, ths, False)
-        im = InformationManager(dm, ev, str_methods, str_aggregators)
-        ensemble = Heterogeneous(dm, fs_methods, aggregator, ths)
+        im = InformationManager(dm, ev, str_selectors, str_aggregators)
+        ensemble = Heterogeneous(dm, selectors, aggregator, ths)
 
         st = time()
         ensemble.select_features()
-        compute_print_time(st)
+        self.compute_print_time(st)
 
         print("\n\nDecoding dataframe...")
+        sys.stdout.flush()
         dm.decode_main_dm_df()
+
         print("\nStarting evaluation process...")
+        sys.stdout.flush()
         ev.evaluate_final_rankings()
 
         print("\n\nCreating csv files...")
+        sys.stdout.flush()
         im.create_csv_tables()
 
         print("\nDone!\n\n")
         print("#################################################################\n")
+        sys.stdout.flush()
         return
 
-    """
+    
 
     def perform_selection_hom(self, dataset_path, results_path, selector, 
                                 aggregator, num_folds, num_bootstraps, seed, ths):
