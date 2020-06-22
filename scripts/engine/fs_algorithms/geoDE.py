@@ -1,4 +1,4 @@
-from geode import chdir
+from . import geode
 import pandas as pd
 import numpy as np
 
@@ -10,7 +10,7 @@ def select(df):
     mat = df.iloc[:, 0:len(df.columns)-1].transpose().to_numpy()
 
     print("Ranking features with Characteristic Direction (GeoDE)...")
-    chdir_res = chdir(mat, labels, genes, calculate_sig=0, nnull=100)
+    chdir_res = geode.chdir(mat, labels, genes, calculate_sig=0, nnull=100)
 
     print("Processing data...")
     data = {}

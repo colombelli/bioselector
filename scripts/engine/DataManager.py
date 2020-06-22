@@ -63,6 +63,7 @@ class DataManager:
     def create_results_dir(self):
 
         print("Creating results directory...")
+        print(self.results_path)
         try:
             mkdir(self.results_path)
         except:

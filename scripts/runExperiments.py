@@ -1,7 +1,7 @@
 import sys
-import time
 import json
 import rpy2.robjects.packages as rpackages
+from BioSExperiments import BioSExperiments
 
 rpackages.quiet_require('FSelectorRcpp')
 #rpackages.quiet_require('FSelector')
@@ -21,5 +21,9 @@ sys.stdout.flush()
 print(results_path)
 sys.stdout.flush()
 
+
+print("STARTING PROCESS!!!")
+bs_exp = BioSExperiments(experiments, results_path)
+bs_exp.run()
 
 

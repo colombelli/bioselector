@@ -1,6 +1,7 @@
 from engine.DataManager import DataManager as dm
 import rpy2.robjects as robjects
 import importlib
+import os
 
 class FSelector:
 
@@ -33,7 +34,8 @@ class RSelector(FSelector):
     def select(self, dataframe, output_path):
         dataframe = dm.pandas_to_r(dataframe)
 
-        call = "./engine/fs_algorithms/" + self.script_name + ".r"
+        this_file_path = os.path.dirname(__file__)
+        call = this_file_path + "/fs_algorithms/" + self.script_name + ".r"
         robjects.r.source(call)
 
         ranking = robjects.r["select"](dataframe)

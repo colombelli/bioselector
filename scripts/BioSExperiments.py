@@ -24,12 +24,7 @@ class BioSExperiments:
     def mount_experiment_folder_name(self, i, count, exp, ds_path):
 
         sufix = "_E" + str(count+i) + "/"
-        rad = exp.type
-
-        for d in exp.datasets:
-            dataset_file_name = d.split('/')[-1].split('.')[0]   # consider using dataset title in the future
-            rad += "_" + dataset_file_name
-
+        rad = exp["type"] + "_" + ds_path.split('/')[-1].split('.')[0]
         return rad+sufix
 
 
@@ -37,37 +32,36 @@ class BioSExperiments:
     def run(self):
         
         exp_count = sum(os.path.isdir(self.results_path+i) for i in os.listdir(self.results_path))
-        if exp_count == 0:
-            exp_count +=1   # just to start right since the below 'enumerate' starts with index 0
 
 
         for i, exp in enumerate(self.experiments):
-            for dataset_path in exp.datasets:
+            for dataset_path in exp["datasets"]:
             
                 exp_name = self.mount_experiment_folder_name(i, exp_count, exp, dataset_path)
+                exp_count += 1
                 complete_results_path = self.results_path + exp_name
 
-                int_folds = round(int(exp.folds))
-                int_seed = round(int(exp.seed))
-                int_bootstraps = round(int(exp.bootstraps))
+                int_folds = round(int(exp["folds"]))
+                int_seed = round(int(exp["seed"]))
+                int_bootstraps = round(int(exp["bootstraps"]))
 
-                if exp.type == 'sin':
-                    self.perform_selection_single(dataset_path, complete_results_path, exp.selectors,
+                if exp["type"] == 'sin':
+                    self.perform_selection_single(dataset_path, complete_results_path, exp["selectors"],
                                                     int_folds, int_seed, self.ths)
 
-                elif exp.type == 'hom':
+                elif exp["type"] == 'hom':
                     self.perform_selection_hom(dataset_path, complete_results_path,
-                                                exp.selectors, exp.aggregators[0], int_folds,
+                                                exp["selectors"], exp["aggregators"][0], int_folds,
                                                 int_bootstraps, int_seed, self.ths)
 
-                elif exp.type == 'het':
+                elif exp["type"] == 'het':
                     self.perform_selection_het(dataset_path, complete_results_path,
-                                                exp.selectors, exp.aggregators[0], int_folds,
+                                                exp["selectors"], exp["aggregators"][0], int_folds,
                                                 int_seed, self.ths)
                     
-                elif exp.type == 'hyb':
-                    self.perform_selection_hyb(dataset_path, complete_results_path,
-                                                exp.selectors, exp.aggregators[0], exp.aggregators[1], 
+                elif exp["type"] == 'hyb':
+                    self.perform_selection_hyb(dataset_path, complete_results_path, exp["selectors"], 
+                                                exp["aggregators"][0], exp["aggregators"][1], 
                                                 int_folds, int_bootstraps, int_seed, self.ths)
         return
 
@@ -177,7 +171,7 @@ class BioSExperiments:
                                 aggregator, num_folds, num_bootstraps, seed, ths):
 
         str_aggregators = [aggregator]
-        str_selectors = selector[0][0]
+        str_selectors = [selector[0][0]]
 
         dm = DataManager(results_path, dataset_path, num_bootstraps, num_folds, seed)
         dm.encode_main_dm_df()
@@ -214,9 +208,8 @@ class BioSExperiments:
     def perform_selection_single(self, dataset_path, results_path, 
                                 selector, num_folds, seed, ths):
 
-        str_aggregators = ["No aggregation"]
         num_bootstraps = 0
-        str_selectors = selector[0][0]    # because selector is always a list, even when it have only one element
+        str_selectors = [selector[0][0]]    # because selector is always a list, even when it have only one element
 
         dm = DataManager(results_path, dataset_path, num_bootstraps, num_folds, seed)
         dm.encode_main_dm_df()
@@ -224,7 +217,7 @@ class BioSExperiments:
         dm.init_data_folding_process()
 
         ev = Evaluator(dm, ths, False)
-        im = InformationManager(dm, ev, str_selectors, str_aggregators)
+        im = InformationManager(dm, ev, str_selectors)
         feature_selector = SingleFS(dm, selector, ths)
 
         st = time()
