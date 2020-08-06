@@ -41,6 +41,8 @@ function ExAddConfigs1(props){
             if(values === null){
                 return
             }
+
+            let scriptAddition = ipcRenderer.sendSync('addSelector', [path]);
             
             const newSelector = {label: values.label, fileName: fileName, 
                                 lang: lang, rankingFile: values.ranking};

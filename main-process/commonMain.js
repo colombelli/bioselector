@@ -2,7 +2,7 @@ const { ipcMain, BrowserWindow } = require('electron');
 const path = require('path');
 const url = require('url');
 
-const bgTasks = ['runExperiments']
+const bgTasks = ['runExperiments', 'addSelector', 'addAggregator']
 
 
 function createCommonIPCmain(bgTask) {

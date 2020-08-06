@@ -5,7 +5,7 @@ const availableSelectors = [
     {label:"Characteristic Direction", fileName: "geoDE", lang: "python", rankingFile: "gd"},
     {label:"Gain Ratio", fileName: "gain-ratio", lang: "r", rankingFile: "gr"},
     {label:"Symmetrical Uncertainty", fileName: "symmetrical-uncertainty", lang: "r", rankingFile: "su"},
-    {label:"One Rule", fileName: "oneR", lang: "r", rankingFile: "or"}
+    {label:"Wx", fileName: "wx", lang: "python", rankingFile: "wx"}
 ]
 
 const bordaRanking = {label: "Borda Count", fileName: "borda"}
