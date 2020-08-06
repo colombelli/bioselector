@@ -16,6 +16,9 @@ function createCommonIPCmain(bgTask) {
 	// variable that will grab main window from event sender prop
 	let sender;
 
+	// variable holding the whole event object
+	let eventHolder;
+
 	// a window object outside the function scope prevents
 	// the object from being garbage collected
 	let hiddenWindow;
@@ -25,6 +28,7 @@ function createCommonIPCmain(bgTask) {
 	ipcMain.on(bgTask, (event, args) => {
 		
 		sender = event.sender
+		eventHolder = event
 
 		const backgroundFileUrl = url.format({
 			pathname: path.join(__dirname, `../background_tasks/
@@ -60,10 +64,12 @@ function createCommonIPCmain(bgTask) {
 
 	ipcMain.on(bgTask.concat('ERR'), (event, args) => {
 		sender.send(bgTask.concat('ERR'), args);
+		eventHolder.returnValue = ['ERR', args];
 	});
 
 	ipcMain.on(bgTask.concat('FINISHED'), (event, args) => {
 		sender.send(bgTask.concat('FINISHED'), args);
+		eventHolder.returnValue = ['FINISHED', args];
 	});
 
 

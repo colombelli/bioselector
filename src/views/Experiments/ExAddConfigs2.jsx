@@ -26,13 +26,14 @@ function ExAddConfigs2(props){
         
         let path = ipcRenderer.sendSync('BROWSE_FILE_METHOD');
         if(path.length === 1){ // if some file was selected
-            
-            //TODO: copy the file to the scripts/engine/etc etc folder
 
             let fileName = getFileNameFromPath(path[0]);
             let values = ipcRenderer.sendSync("ASK_AGGREGATOR_INFO", ensembleAggInfo)
 
             if (values !== null && values.name){
+
+                let scriptAddition = ipcRenderer.sendSync('addAggregator', path);
+                //TO-DO: if scriptAddition[0] == "ERR": warn user  
                 
                 var newAgg = {label: values.name, fileName:fileName};
                 var newAggs = {...aggregators}

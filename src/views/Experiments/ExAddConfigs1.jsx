@@ -17,6 +17,7 @@ function ExAddConfigs1(props){
     
     const [selectors, setSelectors] = useContext(SelectorsContext);
 
+
     function getFileNameFromPath(path){
         return path.split('\\').pop().split('/').pop().split('.')[0];
     }
@@ -32,7 +33,6 @@ function ExAddConfigs1(props){
         let path = ipcRenderer.sendSync('BROWSE_FILE_METHOD');
         if(path.length === 1){ // if some file was selected
             
-            //TODO: copy the file to the scripts/engine/etc etc folder
 
             let fileName = getFileNameFromPath(path[0]);
             let lang = getScriptLangFromPath(path[0]);
@@ -42,7 +42,8 @@ function ExAddConfigs1(props){
                 return
             }
 
-            let scriptAddition = ipcRenderer.sendSync('addSelector', [path]);
+            let scriptAddition = ipcRenderer.sendSync('addSelector', path);
+            //TO-DO: if scriptAddition[0] == "ERR": warn user  
             
             const newSelector = {label: values.label, fileName: fileName, 
                                 lang: lang, rankingFile: values.ranking};
