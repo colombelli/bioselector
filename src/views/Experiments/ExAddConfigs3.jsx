@@ -18,7 +18,7 @@ function ExAddConfigs2(props){
             return(
                 <Col>
                 <FormGroup>
-                    <Label>Bootstraps</Label>
+                    <Label>Bootstrap samples</Label>
                     <Input 
                         type="number" 
                         name="bootstraps"
@@ -50,6 +50,17 @@ function ExAddConfigs2(props){
                         type="number" 
                         name="folds"
                         placeholder="Ex: 5" 
+                        innerRef={props.register({ required: true })}/>
+                </FormGroup> 
+                </Col>
+
+                <Col>
+                <FormGroup>
+                    <Label>Thresholds</Label>
+                    <Input 
+                        type="text" 
+                        name="thresholds"
+                        placeholder="Ex: 1,5,10,25,50,100" 
                         innerRef={props.register({ required: true })}/>
                 </FormGroup> 
                 </Col>

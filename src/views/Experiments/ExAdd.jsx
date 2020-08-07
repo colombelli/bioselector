@@ -187,6 +187,18 @@ function ExAdd(){
     }
 
 
+    const getThresholds = (data) => {
+        var thresholds = data["thresholds"];
+
+        let listThresh = thresholds.replace(/\s+/g, '');
+        listThresh = listThresh.split(',')
+        let listThreshInt = listThresh.map(function(item) {
+            return parseInt(item, 10);
+        })
+        return listThreshInt.filter(item => item);
+    }
+
+
     const getAdditionalInfo = (data) => {
         
         var folds = data["folds"];
@@ -211,12 +223,14 @@ function ExAdd(){
         const aggregators = getAggregators(data, experimentType);
         const datasets = getSelectedDatasets();
         const {folds, seed, bootstraps} = getAdditionalInfo(data)
+        const thresholds = getThresholds(data)
 
         const experiment = {
             "type": experimentType,
             "selectors": selectors,
             "aggregators": aggregators,
             "datasets": datasets,
+            "thresholds": thresholds,
             "folds": folds,
             "seed": seed,
             "bootstraps": bootstraps

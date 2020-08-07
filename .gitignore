@@ -28,3 +28,7 @@ __pycache__/
 
 #vscode
 .vscode/
+
+
+#wx related files
+slp_wx_weights_best.hdf5

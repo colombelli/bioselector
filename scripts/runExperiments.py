@@ -1,7 +1,6 @@
 import sys
 import json
 import rpy2.robjects.packages as rpackages
-#from BioSExperiments import BioSExperiments
 from efsassembler import Experiments
 
 
@@ -17,11 +16,5 @@ sys.stdout.flush()
 print(results_path)
 sys.stdout.flush()
 
-
-
-"""
-print("STARTING PROCESS!!!")
-bs_exp = BioSExperiments(experiments, results_path)
-bs_exp.run()
-"""
-
+exp = Experiments(experiments, results_path)
+exp.run()
