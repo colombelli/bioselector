@@ -11,7 +11,7 @@ import {
   } from "reactstrap";
 
 import {ExperimentsContext, DatasetsContext, 
-    SelectorsContext, AggregatorsContext, RunningExperimentsContext} from '../../Store';
+    SelectorsContext, AggregatorsContext, RunningExperimentsContext, ResultsPath} from '../../Store';
 const { ipcRenderer } = window.require('electron');
 
 
@@ -25,7 +25,7 @@ function ExRoot() {
     const [selectors, ] = useContext(SelectorsContext);
     const [aggregators, ] = useContext(AggregatorsContext);
     const [runningExperiments, setRunningExperiments] = useContext(RunningExperimentsContext);
-    const [resultsPath, setResultsPath] = useState("");
+    const [resultsPath, setResultsPath] = useContext(ResultsPath);
     const [, forceUpdate] = useReducer(x => x + 1, 0);
     
     function addExperiments(){
@@ -68,6 +68,7 @@ function ExRoot() {
                     updatedExperiments["list"].push(element);
                   };
               });
+
             setExperiments(updatedExperiments);
         }
       
