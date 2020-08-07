@@ -41,12 +41,13 @@ function ExRoot() {
     ipcRenderer.removeAllListeners('runExperimentsFINISHED');
 
     ipcRenderer.on('runExperimentsBG_MESSAGE', (event, message) => {
-        console.log("received a message from background")
-        console.log(message)
+        if (message.includes("INFO")){
+            console.log(message.split("INFO:efs-assembler:")[1])
+          }
     });
 
     ipcRenderer.on('runExperimentsERR', (event, message) => {
-        console.log("received a ERR from background")
+        console.log("Received a ERROR from background")
         console.log(message)
     });
 
