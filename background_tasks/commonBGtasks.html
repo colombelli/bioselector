@@ -6,12 +6,16 @@
 
     function setupBGtask(bgTask){
 
+        var pyshellPointer;
+
         ipcRenderer.on(bgTask.concat('START'), (event, args) => {
 
             let pyshell = new PythonShell(path.join(__dirname, `/../scripts/${bgTask}.py`), {
                 pythonPath: 'python3',
                 args: JSON.stringify(args)
             });
+
+            pyshellPointer = pyshell
 
             pyshell.on('message', function(results) {
                 ipcRenderer.send(bgTask.concat('MESSAGE'), { message: results });
@@ -26,6 +30,10 @@
                 }
             });
 
+        });
+
+        ipcRenderer.on(bgTask.concat('AK_KILL_PROCESS'), (event, args) => {
+            pyshellPointer.childProcess.kill('SIGINT');
         });
 
         ipcRenderer.send(bgTask.concat('READY'));

@@ -16,8 +16,11 @@ function createCommonIPCmain(bgTask) {
 	// variable that will grab main window from event sender prop
 	let sender;
 
-	// variable holding the whole event object
+	// variable holding the whole event object called from react view page
 	let eventHolder;
+
+	// hidden process holder
+	let hiddenProcessEvent;
 
 	// a window object outside the function scope prevents
 	// the object from being garbage collected
@@ -58,7 +61,9 @@ function createCommonIPCmain(bgTask) {
 	// This event listener will listen for data being sent back
 	// from the background renderer process
 	ipcMain.on(bgTask.concat('MESSAGE'), (event, args) => {
+		hiddenProcessEvent = event;
 		sender.send(bgTask.concat('BG_MESSAGE'), args.message);
+
 	});
 
 
@@ -77,6 +82,10 @@ function createCommonIPCmain(bgTask) {
 	// it to start the background processing
 	ipcMain.on(bgTask.concat('READY'), (event, args) => {
 		event.reply(bgTask.concat('START'),  cache.args);
+	});
+
+	ipcMain.on(bgTask.concat('KILL'), (event, _) => {
+		hiddenProcessEvent.reply(bgTask.concat('AK_KILL_PROCESS'));
 	});
 }
 

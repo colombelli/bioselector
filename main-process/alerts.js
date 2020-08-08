@@ -111,3 +111,41 @@ ipcMain.on('ASK_DATASET_INFO', (event, _) => {
         event.returnValue = datasetTitle;
     });
 });
+
+
+ipcMain.on('OPEN_PROGRESS_BAR_WINDOW', (event, checkpoints) => {
+
+    const alertHtml = url.format({
+        pathname: path.join(__dirname, `../alert_views/expProgressBar.html`),
+        protocol: 'file:',
+        slashes: true,
+    });
+
+    alertWin = new BrowserWindow({
+        width: 420,
+        height: 456,
+        resizable: false,
+        frame: false,
+        show: true,
+		webPreferences: {
+			nodeIntegration: true,
+		},
+    });
+
+    alertWin.loadURL(alertHtml);
+
+    alertWin.on('closed', () => {
+        alertWin = null;
+    });
+
+
+    ipcMain.once('CANCEL_EXPERIMENTS_RUNNING', (event, _) => {
+        alertWin.close();
+        event.returnValue = null;
+    });
+
+    ipcMain.once('CLOSE_EXPERIMENTS_PROGRESS_WINDOW', (event, _) => {
+        alertWin.close();
+        event.returnValue = null;
+    });
+});

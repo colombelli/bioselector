@@ -1,4 +1,4 @@
-import React, { useContext, useReducer, useState } from 'react';
+import React, { useContext, useReducer } from 'react';
 import {
     Card,
     CardBody,
@@ -179,7 +179,9 @@ function ExRoot() {
             return
         } else {
             console.log('go!');
+
             setRunningExperiments(false);//TRUE!!
+            ipcRenderer.send('OPEN_PROGRESS_BAR_WINDOW');
             ipcRenderer.send('runExperiments', [experiments.list, resultsPath]);
             ipcRenderer.send('loadDatasets');
         }
