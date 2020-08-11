@@ -113,7 +113,7 @@ ipcMain.on('ASK_DATASET_INFO', (event, _) => {
 });
 
 
-ipcMain.on('OPEN_PROGRESS_BAR_WINDOW', (event, checkpoints) => {
+ipcMain.on('OPEN_PROGRESS_BAR_WINDOW', (event, args) => {
 
     const alertHtml = url.format({
         pathname: path.join(__dirname, `../alert_views/expProgressBar.html`),
@@ -133,11 +133,14 @@ ipcMain.on('OPEN_PROGRESS_BAR_WINDOW', (event, checkpoints) => {
     });
 
     alertWin.loadURL(alertHtml);
-
+    
     alertWin.on('closed', () => {
         alertWin = null;
     });
 
+    ipcMain.once('READY', (event, _) => {
+        event.sender.send('RUN_EXPERIMENTS', args);
+    });
 
     ipcMain.once('CANCEL_EXPERIMENTS_RUNNING', (event, _) => {
         alertWin.close();

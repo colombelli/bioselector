@@ -42,7 +42,8 @@ function ExRoot() {
 
     ipcRenderer.on('runExperimentsBG_MESSAGE', (event, message) => {
         if (message.includes("INFO")){
-            console.log(message.split("INFO:efs-assembler:")[1])
+            var formattedMessage = message.split("INFO:efs-assembler:")[1];
+
           }
     });
 
@@ -181,9 +182,8 @@ function ExRoot() {
             console.log('go!');
 
             setRunningExperiments(false);//TRUE!!
-            ipcRenderer.send('OPEN_PROGRESS_BAR_WINDOW');
-            ipcRenderer.send('runExperiments', [experiments.list, resultsPath]);
-            ipcRenderer.send('loadDatasets');
+            ipcRenderer.send('OPEN_PROGRESS_BAR_WINDOW', [experiments.list, resultsPath]);
+            //ipcRenderer.send('runExperiments', [experiments.list, resultsPath]);
         }
     }
 

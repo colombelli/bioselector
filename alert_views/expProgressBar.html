@@ -80,45 +80,45 @@
         background-color: #cccc;
 
         }
+      
+      textarea { font-size: 10px; }
     </style>
 
     <script>
 
-      const { ipcRenderer, ipcMain } = require('electron');
-      const newLine = "&#13;&#10;"
+      const { ipcRenderer } = require('electron');
 
-      ipcMain.on('runExperimentsBG_MESSAGE', (event, args) => {
-        let message = args.message
+
+      ipcRenderer.on('runExperimentsBG_MESSAGE', (event, message) => {
 
         if (message.includes("INFO")){
             let procMessage = message.split("INFO:efs-assembler:")[1]
-            console.log(procMessage)
 
             //IF FINISH MESSAGE ENABLE BUTTON:
             document.getElementById("okButton").disabled = true;
 
-            procMessage = newLine + procMessage
+            procMessage = '\r\n' + procMessage + '\r\n'
 
-            document.getElementById("informationBox").value += procMessage
+            let textarea = document.getElementById("informationBox") 
+            textarea.value += procMessage
+            textarea.scrollTop = textarea.scrollHeight;
         }
-        
       });
 
 
+      ipcRenderer.on('runExperimentsERR', (event, message) => {
+          
+        const error = "\r\nERROR!\r\n"
 
-      ipcMain.on('runExperimentsERR', (event, message) => {
-          //TO-DO
-          console.log("Received a ERROR from background")
-          console.log(message)
+        const text = error + message
+        let textarea = document.getElementById("informationBox") 
+        textarea.value += procMessage
+        textarea.scrollTop = textarea.scrollHeight;
       });
 
-      ipcMain.on('runExperimentsFINISHED', (event, message) => {
-          //TO-DO
-          console.log("received a FINISH from background")
-          console.log(message)
+      ipcRenderer.on('runExperimentsFINISHED', (event, message) => {
+        document.getElementById("okButton").disabled = false;
       });
-
-      document.getElementById("informationBox").value += "AAAAA";
 
       function closeWindow() {
         ipcRenderer.send('CLOSE_EXPERIMENTS_PROGRESS_WINDOW');
@@ -129,18 +129,33 @@
         ipcRenderer.send('CLOSE_EXPERIMENTS_PROGRESS_WINDOW');
       }
 
+      ipcRenderer.on('RUN_EXPERIMENTS', (_, args) => {
+        let experiments = args[0]
+        let resultsPath = args[1]
+        
+        console.log("GOO!")
+        console.log(experiments)
+
+        ipcRenderer.send('runExperiments', [experiments, resultsPath])
+      })
+
+      function onBodyLoad(){
+        ipcRenderer.send('READY');
+      }
+
     </script>
 
   </head>
   
-  <body>
+  <body onload="onBodyLoad()">
     
       <div class="formcontainer">
-		<h4>Running experiments...</h4>
+		<h4>Running experiments</h4>
       <hr/>
       <div class="container">
         
-	<textarea name="comment" id="informationBox" rows="10" cols="30">Preparing to run experiments...</textarea>
+	<textarea name="comment" id="informationBox" rows="14" cols="60" readonly>Preparing to run experiments...
+  </textarea>
         	<div class="progress">
       <div id="progressBar" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="70"
       aria-valuemin="0" aria-valuemax="100" style="width:70%">
