@@ -36,28 +36,6 @@ function ExRoot() {
         setExperiments({view: addExperimentView, list: expList});
     }
 
-    ipcRenderer.removeAllListeners('runExperimentsBG_MESSAGE');
-    ipcRenderer.removeAllListeners('runExperimentsERR');
-    ipcRenderer.removeAllListeners('runExperimentsFINISHED');
-
-    ipcRenderer.on('runExperimentsBG_MESSAGE', (event, message) => {
-        if (message.includes("INFO")){
-            var formattedMessage = message.split("INFO:efs-assembler:")[1];
-
-          }
-    });
-
-    ipcRenderer.on('runExperimentsERR', (event, message) => {
-        console.log("Received a ERROR from background")
-        console.log(message)
-    });
-
-    ipcRenderer.on('runExperimentsFINISHED', (event, message) => {
-        console.log("received a FINISH from background")
-        console.log(message)
-    });
-
-
 
     const removeExperiment = (id) => {
         if (removable) {
@@ -179,11 +157,8 @@ function ExRoot() {
         if (runningExperiments){
             return
         } else {
-            console.log('go!');
-
-            setRunningExperiments(false);//TRUE!!
+            setRunningExperiments(false); //TRUE!!
             ipcRenderer.send('OPEN_PROGRESS_BAR_WINDOW', [experiments.list, resultsPath]);
-            //ipcRenderer.send('runExperiments', [experiments.list, resultsPath]);
         }
     }
 
