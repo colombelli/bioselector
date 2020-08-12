@@ -3,8 +3,7 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>window.jQuery = window.$ = require('jquery');</script>
 
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> 
@@ -88,19 +87,103 @@
 
       const { ipcRenderer } = require('electron');
 
+      var progressMsgCheckpoints = [];
+      var totalMsgs;
+      var currentCount = 0;
+
+
+      function getNonBootstrapExperimentMessages(folds, datasets) {
+        folds = parseInt(folds);
+        datasets.forEach(path => {
+
+          progressMsgCheckpoints.push("Loading dataset: " + path);
+          [...Array(folds).keys()].forEach(fold => {
+            fold += 1; 
+            progressMsgCheckpoints.push("Starting fold iteration " + fold.toString());
+          });
+          progressMsgCheckpoints.push("Selecting features using the whole dataset");
+          progressMsgCheckpoints.push("Experiment finished!");
+        });  
+      }
+
+
+      function getBootstrapExperimentMessages(folds, bootstraps, datasets) {
+        folds = parseInt(folds);
+        bootstraps = parseInt(bootstraps);
+
+        datasets.forEach(path => {
+
+          progressMsgCheckpoints.push("Loading dataset: " + path);
+          [...Array(folds).keys()].forEach(fold => {
+            fold += 1; 
+
+            [...Array(bootstraps).keys()].forEach(bootstrap => {
+              bootstrap += 1;
+
+              let log = "Bootstrap: " + bootstrap.toString() + " | Fold iteration: " + fold.toString();
+              progressMsgCheckpoints.push(log);
+            });
+          });
+
+          progressMsgCheckpoints.push("Selecting features using the whole dataset");
+          progressMsgCheckpoints.push("Experiment finished!");
+        });  
+      }
+
+
+      function calculateProgressMessages(experiments) {
+
+        experiments.forEach(exp => {
+
+          if (exp.type == "hom" || exp.type == "hyb")
+            getBootstrapExperimentMessages(exp.folds, exp.bootstraps, exp.datasets);
+
+          else
+            getNonBootstrapExperimentMessages(exp.folds, exp.datasets);
+        })
+
+        totalMsgs = progressMsgCheckpoints.length;
+        return
+      }
+
+      function setProgressBarValue(percentage) {
+        let progressBar = document.getElementById("progressBar");
+        progressBar.setAttribute("aria-valuenow", percentage);
+        progressBar.style = "width:" + percentage + "%";
+        progressBar.innerHTML = percentage + "%";
+        return
+      }
+
+
+      function updateProgress(message){
+        if (progressMsgCheckpoints[currentCount] == message) {
+
+          currentCount += 1;
+          if (currentCount >= totalMsgs) { //then i calculate something wrong, but no one has to know
+            return
+          }
+
+          let percentage = Math.round((currentCount / totalMsgs) * 100);
+          percentage = percentage.toString();
+          
+          setProgressBarValue(percentage);
+        } else return;
+      }
+
 
       ipcRenderer.on('runExperimentsBG_MESSAGE', (event, message) => {
 
         if (message.includes("INFO")){
-            let procMessage = message.split("INFO:efs-assembler:")[1]
+            let procMessage = message.split("INFO:efs-assembler:")[1];
 
             //IF FINISH MESSAGE ENABLE BUTTON:
             document.getElementById("okButton").disabled = true;
 
-            procMessage = '\r\n' + procMessage + '\r\n'
+            updateProgress(procMessage);
+            procMessage = '\r\n' + procMessage + '\r\n';
 
-            let textarea = document.getElementById("informationBox") 
-            textarea.value += procMessage
+            let textarea = document.getElementById("informationBox") ;
+            textarea.value += procMessage;
             textarea.scrollTop = textarea.scrollHeight;
         }
       });
@@ -108,16 +191,17 @@
 
       ipcRenderer.on('runExperimentsERR', (event, message) => {
           
-        const error = "\r\nERROR!\r\n"
+        const error = "\r\nERROR!\r\n";
 
-        const text = error + message
-        let textarea = document.getElementById("informationBox") 
-        textarea.value += procMessage
+        const text = error + message;
+        let textarea = document.getElementById("informationBox"); 
+        textarea.value += procMessage;
         textarea.scrollTop = textarea.scrollHeight;
       });
 
       ipcRenderer.on('runExperimentsFINISHED', (event, message) => {
         document.getElementById("okButton").disabled = false;
+        setProgressBarValue("100");
       });
 
       function closeWindow() {
@@ -130,13 +214,14 @@
       }
 
       ipcRenderer.on('RUN_EXPERIMENTS', (_, args) => {
-        let experiments = args[0]
-        let resultsPath = args[1]
-        
-        console.log("GOO!")
-        console.log(experiments)
+        let experiments = args[0];
+        let resultsPath = args[1];
 
-        ipcRenderer.send('runExperiments', [experiments, resultsPath])
+        calculateProgressMessages(experiments);
+        console.log(progressMsgCheckpoints)
+        console.log(" ")
+
+        ipcRenderer.send('runExperiments', [experiments, resultsPath]);
       })
 
       function onBodyLoad(){
@@ -157,9 +242,9 @@
 	<textarea name="comment" id="informationBox" rows="14" cols="60" readonly>Preparing to run experiments...
   </textarea>
         	<div class="progress">
-      <div id="progressBar" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="70"
-      aria-valuemin="0" aria-valuemax="100" style="width:70%">
-        70%
+      <div id="progressBar" class="progress-bar progress-bar-striped active progress-bar-success" role="progressbar" aria-valuenow="1"
+      aria-valuemin="1" aria-valuemax="100" style="width:1%">
+        1%
       </div>
     </div> 
       </div>
