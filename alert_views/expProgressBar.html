@@ -146,11 +146,22 @@
         return
       }
 
-      function setProgressBarValue(percentage) {
+      function setProgressBarValue(percentage, error=false) {
         let progressBar = document.getElementById("progressBar");
-        progressBar.setAttribute("aria-valuenow", percentage);
-        progressBar.style = "width:" + percentage + "%";
-        progressBar.innerHTML = percentage + "%";
+        if (percentage != "ERROR") {
+          progressBar.setAttribute("aria-valuenow", percentage);
+          progressBar.style = "width:" + percentage + "%";
+          progressBar.innerHTML = percentage + "%";
+        }
+
+        if (percentage == "100"){
+          progressBar.className = "progress-bar progress-bar-striped progress-bar-success";  // deactivate progressbar
+        }
+
+        if (error) {
+          progressBar.className = "progress-bar progress-bar-striped progress-bar-danger"; // red deactivated progressbar
+        }
+
         return
       }
 
@@ -176,9 +187,6 @@
         if (message.includes("INFO")){
             let procMessage = message.split("INFO:efs-assembler:")[1];
 
-            //IF FINISH MESSAGE ENABLE BUTTON:
-            document.getElementById("okButton").disabled = true;
-
             updateProgress(procMessage);
             procMessage = '\r\n' + procMessage + '\r\n';
 
@@ -197,6 +205,7 @@
         let textarea = document.getElementById("informationBox"); 
         textarea.value += procMessage;
         textarea.scrollTop = textarea.scrollHeight;
+        setProgressBarValue("ERROR", true);
       });
 
       ipcRenderer.on('runExperimentsFINISHED', (event, message) => {
@@ -218,8 +227,6 @@
         let resultsPath = args[1];
 
         calculateProgressMessages(experiments);
-        console.log(progressMsgCheckpoints)
-        console.log(" ")
 
         ipcRenderer.send('runExperiments', [experiments, resultsPath]);
       })
