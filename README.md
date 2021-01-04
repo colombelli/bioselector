@@ -37,9 +37,10 @@ Start by following the installation steps for [efs-assembler](https://github.com
 Then .... (we still need to investigate a production solution)
 
 
-## Usage guide
+## Usage demonstration
 
-Video tutorial here.
+[![BioSelector Demonstration](https://yt-embed.herokuapp.com/embed?v=AK1osfRe86Q)](https://youtu.be/AK1osfRe86Q "Usage Demonstration")
+
 
 
 [creative-tim]: https://www.creative-tim.com/
