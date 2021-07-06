@@ -227,13 +227,14 @@ function ExAdd(){
 
         const experiment = {
             "type": experimentType,
-            "selectors": selectors,
+            "rankers": selectors,
             "aggregators": aggregators,
             "datasets": datasets,
             "thresholds": thresholds,
             "folds": folds,
             "seed": seed,
-            "bootstraps": bootstraps
+            "bootstraps": bootstraps,
+            "classifier": "gbc" //GradientBoostClassifier
         }        
         
         return experiment;

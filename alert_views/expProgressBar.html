@@ -199,11 +199,10 @@
 
       ipcRenderer.on('runExperimentsERR', (event, message) => {
           
-        const error = "\r\nERROR!\r\n";
-
-        const text = error + message;
+        const errorStr = "\r\nERROR!\r\n";
+        const text = errorStr + message.traceback;
         let textarea = document.getElementById("informationBox"); 
-        textarea.value += procMessage;
+        textarea.value += text;
         textarea.scrollTop = textarea.scrollHeight;
         setProgressBarValue("ERROR", true);
       });

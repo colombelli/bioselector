@@ -125,8 +125,8 @@ function ExRoot() {
     const renderExperiments = () => {
 
             return experiments["list"].map((experiment, index) => {
-                let { type, selectors, aggregators, datasets, id } = experiment
-                let exSelectorsFileNames = selectors.map((lst) => {return lst[0]});
+                let { type, rankers, aggregators, datasets, id } = experiment
+                let exSelectorsFileNames = rankers.map((lst) => {return lst[0]});
 
                 return (
                     <tr key={id} id={id} onClick={() => removeExperiment(id)}
