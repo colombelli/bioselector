@@ -28,6 +28,7 @@ import Analysis from "views/Analysis.jsx";
 import Selection from "views/Selection.jsx";
 import Classifier from "views/Classifier.jsx";
 import Guide from "views/Guide.jsx";
+import About from "views/About.jsx";
 
 var routes = [
   {
@@ -77,6 +78,13 @@ var routes = [
     name: "Guide",
     icon: "nc-icon nc-hat-3",
     component: Guide,
+    layout: "/index"
+  },
+  {
+    path: "/about",
+    name: "About",
+    icon: "nc-icon nc-alert-circle-i",
+    component: About,
     layout: "/index"
   },
 /*
