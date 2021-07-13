@@ -273,7 +273,7 @@ function ExAdd(){
                 className={getMethodCardClass(selectedMethod.sin)} body
                 style={{height:dimensions.height}}
                 >
-                <CardTitle tag="h5">Single Feature Selectior</CardTitle>
+                <CardTitle tag="h5">Single Feature Selector</CardTitle>
                 <hr></hr>
                 <CardBody>
                 <CardText>
