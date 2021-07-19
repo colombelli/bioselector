@@ -5,3 +5,27 @@ img{
 .img-raised{
     box-shadow: $box-shadow-raised;
 }
+.img-about{
+    box-shadow: $box-shadow-raised;
+    /* border-radius: 50%; */
+    object-fit: cover;
+    height: auto;
+    max-height: 400px;
+    width: auto;
+}
+
+/* Fixed size piece of code if needed in the future */
+.img-about-div{
+        width: 60px;
+        height: 60px;
+        -webkit-border-radius: 60px;
+        -webkit-background-clip: padding-box;
+        -moz-border-radius: 60px;
+        -moz-background-clip: padding;
+        border-radius: 60px;
+        background-clip: padding-box;
+        margin: 7px 0 0 5px;
+        float: left;
+        background-size: cover;
+        background-position: center center;
+}

@@ -19,7 +19,6 @@
 
 import Notifications from "views/Notifications.jsx";
 import Icons from "views/Icons.jsx";
-import UserPage from "views/User.jsx";
 
 import Project from "views/Project.jsx";
 import Datasets from "views/Datasets.jsx";
