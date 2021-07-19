@@ -65,14 +65,21 @@ function About() {
                                         <Card>
                                             <CardImg top src={require("assets/img/felipe-2.png")} className="img-about" /> 
                                             <CardHeader><CardTitle tag="h6">Felipe Colombelli</CardTitle></CardHeader>
-                                            <CardBody>Undergraduate student blablabla</CardBody>
+                                            <CardBody>Computer Science undergraduate at Universidade Federal do Rio Grande do Sul (UFRGS),
+                                                former member of PET Computação UFRGS, member of the Bioinformatics Core of HCPA (Núcleo de 
+                                                Bioinformática do HCPA) research group, and scientific inititation fellow advised by
+                                                Prof. Mariana Recamonde Mendoza.  
+                                            </CardBody>
                                         </Card>
                                     </Col>
                                     <Col>
                                         <Card>
                                             <CardImg top src={require("assets/img/mariana.jpg")} className="img-about" />
                                             <CardHeader><CardTitle tag="h6">Mariana Recamonde Mendoza</CardTitle></CardHeader>
-                                            <CardBody>Professor Phd blablabla</CardBody>
+                                            <CardBody>Tenured Associate Professor (Professor Adjunto) at the Institute of Informatics 
+                                                (INF) of Universidade Federal do Rio Grande do Sul (UFRGS), Researcher Professor 
+                                                at Hospital de Clínicas de Porto Alegre (HCPA) and coordinator of the Bioinformatics 
+                                                Core of HCPA (Núcleo de Bioinformática do HCPA).</CardBody>
                                         </Card>
                                     </Col>
                                 </Row>
