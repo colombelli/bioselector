@@ -58,20 +58,20 @@ var routes = [
     component: Analysis,
     layout: "/index"
   },
-  {
+/*   {
     path: "/selection",
     name: "Selection",
     icon: "nc-icon nc-bulb-63",
     component: Selection,
     layout: "/index"
-  },
-  {
+  }, */
+/*   {
     path: "/classifier",
     name: "Classifier",
     icon: "nc-icon nc-compass-05",
     component: Classifier,
     layout: "/index"
-  },
+  }, */
   {
     path: "/guide",
     name: "Guide",
