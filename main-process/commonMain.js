@@ -68,8 +68,13 @@ function createCommonIPCmain(bgTask) {
 
 
 	ipcMain.on(bgTask.concat('ERR'), (event, args) => {
-		sender.send(bgTask.concat('ERR'), args);
-		eventHolder.returnValue = ['ERR', args];
+		try{
+			sender.send(bgTask.concat('ERR'), args);
+			eventHolder.returnValue = ['ERR', args];
+		} catch (error) {
+			console.log("Probably destroyed after canceling stuff, aborting...");
+			console.log(error);	
+		}
 	});
 
 	ipcMain.on(bgTask.concat('FINISHED'), (event, args) => {
@@ -85,7 +90,12 @@ function createCommonIPCmain(bgTask) {
 	});
 
 	ipcMain.on(bgTask.concat('KILL'), (event, _) => {
-		hiddenProcessEvent.reply(bgTask.concat('AK_KILL_PROCESS'));
+		try{
+			hiddenProcessEvent.reply(bgTask.concat('AK_KILL_PROCESS'));
+		} catch (error){
+			console.log("Probably due to two KILL messages sent, ignoring...");
+			console.log(error);	
+		}
 	});
 }
 
