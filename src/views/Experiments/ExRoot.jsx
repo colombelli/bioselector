@@ -154,7 +154,7 @@ function ExRoot() {
 
     const runExperiments = () => {
 
-        if (runningExperiments){
+        if (runningExperiments || (!resultsPath) || (!experiments.list.length)){
             return
         } else {
             setRunningExperiments(false); //TRUE!!
