@@ -152,7 +152,7 @@
 
         // Due to the final balanced selection messages recalculation, it could be the case
         // that a new percentage is small than the previous one
-        if ((percentage != "ERROR") && (percentage > previousPercentage)) {
+        if ((percentage != "ERROR") && (parseInt(percentage) > parseInt(previousPercentage))) {
           progressBar.setAttribute("aria-valuenow", percentage);
           progressBar.style = "width:" + percentage + "%";
           progressBar.innerHTML = percentage + "%";
@@ -196,7 +196,6 @@
           let finalSelectionLog = "Final selection process | ";
           
           for (let i=1; i < totalFolds+1; i++){
-            console.log("i: "+i);
             progressMsgCheckpoints.splice(currentCount+i, 0, finalSelectionLog+i+"/"+totalFolds);
           }
 
