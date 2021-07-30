@@ -28,7 +28,12 @@
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
     "compile-sass": "node-sass src/assets/scss/paper-dashboard.scss src/assets/css/paper-dashboard.css",
     "minify-sass": "node-sass src/assets/scss/paper-dashboard.scss src/assets/css/paper-dashboard.min.css --output-style compressed",
-    "map-sass": "node-sass src/assets/scss/paper-dashboard.scss src/assets/css/paper-dashboard.css --source-map true"
+    "map-sass": "node-sass src/assets/scss/paper-dashboard.scss src/assets/css/paper-dashboard.css --source-map true",
+
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=/src/assets/img/icons/bioselector_icon.icns --prune=true --out=release-builds",
+    "package-windows": "electron-packager . electron-tutorial-app --overwrite --asar=true --platform=win32 --arch=ia32 --icon=/src/assets/img/icons/bioselector_icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"BioSelector\"",
+    "package-linux": "electron-packager . electron-tutorial-app --overwrite --asar=true --platform=linux --arch=x64 --icon=/src/assets/img/icons/bioselector_icon.png --prune=true --out=release-builds"
+
   },
   "main": "public/electron.js",
   "eslintConfig": {
@@ -49,7 +54,8 @@
   },
   "devDependencies": {
     "concurrently": "^5.0.0",
-    "electron": "^6.0.11",
+    "electron": "^6.1.12",
+    "electron-packager": "^15.3.0",
     "wait-on": "^3.3.0"
   }
 }
