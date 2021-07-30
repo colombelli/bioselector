@@ -148,7 +148,11 @@
 
       function setProgressBarValue(percentage, error=false) {
         let progressBar = document.getElementById("progressBar");
-        if (percentage != "ERROR") {
+        let previousPercentage = progressBar.getAttribute("aria-valuenow");
+
+        // Due to the final balanced selection messages recalculation, it could be the case
+        // that a new percentage is small than the previous one
+        if ((percentage != "ERROR") && (percentage > previousPercentage)) {
           progressBar.setAttribute("aria-valuenow", percentage);
           progressBar.style = "width:" + percentage + "%";
           progressBar.innerHTML = percentage + "%";
@@ -178,6 +182,26 @@
           percentage = percentage.toString();
           
           setProgressBarValue(percentage);
+        
+        } else if (message.includes("Final selection process | 0/")) { // Add messages of balanced selection instead
+          console.log(message);
+          // Replace final selection unbalanced message with balanced ones
+          progressMsgCheckpoints.splice(currentCount, 1, message);
+          
+          // Get the number of the current fold and number of total folds
+          let numberPattern = /\d+/g;
+
+          let totalFolds = parseInt(message.match(numberPattern)[1]);
+          console.log(totalFolds);
+          let finalSelectionLog = "Final selection process | ";
+          
+          for (let i=1; i < totalFolds+1; i++){
+            console.log("i: "+i);
+            progressMsgCheckpoints.splice(currentCount+i, 0, finalSelectionLog+i+"/"+totalFolds);
+          }
+
+          totalMsgs = progressMsgCheckpoints.length;
+          currentCount += 1;
         } else return;
       }
 
