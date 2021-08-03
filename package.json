@@ -16,7 +16,7 @@
     "react-hook-form": "^5.7.2",
     "react-notification-alert": "0.0.12",
     "react-router-dom": "5.0.0",
-    "react-scripts": "3.2.0",
+    "react-scripts": "3.4.4",
     "reactstrap": "8.0.0"
   },
   "scripts": {
@@ -31,8 +31,8 @@
     "minify-sass": "node-sass src/assets/scss/paper-dashboard.scss src/assets/css/paper-dashboard.min.css --output-style compressed",
     "map-sass": "node-sass src/assets/scss/paper-dashboard.scss src/assets/css/paper-dashboard.css --source-map true",
     "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=src/assets/img/icons/bioselector_icon.icns --prune=true --out=release-builds",
-    "package-windows": "electron-packager . bioselector --overwrite --asar=true --platform=win32 --arch=ia32 --icon=src/assets/img/icons/bioselector_icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"BioSelector\"",
-    "package-linux": "electron-packager . bioselector --overwrite --asar=true --platform=linux --arch=x64 --icon=src/assets/img/icons/bioselector_icon.png --prune=true --out=release-builds"
+    "package-windows": "electron-packager . bioselector --overwrite --asar --platform=win32 --arch=ia32 --icon=src/assets/img/icons/bioselector_icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"BioSelector\"",
+    "package-linux": "electron-packager . bioselector --overwrite --asar --platform=linux --arch=x64 --icon=src/assets/img/icons/bioselector_icon.png --prune=true --out=release-builds"
   },
   "main": "public/electron.js",
   "eslintConfig": {

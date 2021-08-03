@@ -32,3 +32,6 @@ __pycache__/
 
 #wx related files
 slp_wx_weights_best.hdf5
+
+#ignore release builds because of their size
+/release-builds

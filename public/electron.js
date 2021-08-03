@@ -26,7 +26,7 @@ function createWindow() {
 	});
 	mainWindow.setMenuBarVisibility(false);
 	mainWindow.loadURL(startUrl);
-	process.env.DEV && mainWindow.webContents.openDevTools();
+	process.env.DEV; // && mainWindow.webContents.openDevTools();
 
 	mainWindow.on('closed', function() {
 		mainWindow = null;
