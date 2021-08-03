@@ -1,5 +1,6 @@
 {
   "name": "bioselector",
+  "homepage": ".",
   "productName": "BioSelector",
   "version": "0.1.0",
   "private": true,
@@ -22,18 +23,16 @@
     "react-start": "BROWSER=NONE react-scripts start",
     "electron-start": "DEV=1 electron .",
     "start": "concurrently 'npm run react-start' 'wait-on http://localhost:3000/ && npm run electron-start'",
-    "build": "react-scripts build",
+    "build": "rm -rf build/ && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
     "compile-sass": "node-sass src/assets/scss/paper-dashboard.scss src/assets/css/paper-dashboard.css",
     "minify-sass": "node-sass src/assets/scss/paper-dashboard.scss src/assets/css/paper-dashboard.min.css --output-style compressed",
     "map-sass": "node-sass src/assets/scss/paper-dashboard.scss src/assets/css/paper-dashboard.css --source-map true",
-
     "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=src/assets/img/icons/bioselector_icon.icns --prune=true --out=release-builds",
     "package-windows": "electron-packager . bioselector --overwrite --asar=true --platform=win32 --arch=ia32 --icon=src/assets/img/icons/bioselector_icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"BioSelector\"",
     "package-linux": "electron-packager . bioselector --overwrite --asar=true --platform=linux --arch=x64 --icon=src/assets/img/icons/bioselector_icon.png --prune=true --out=release-builds"
-
   },
   "main": "public/electron.js",
   "eslintConfig": {

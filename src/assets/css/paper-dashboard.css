@@ -991,6 +991,13 @@ fieldset[disabled]
   .btn-sm.btn-simple {
     padding: 4px 14px; }
 
+.btn-card {
+  font-size: 1rem;
+  border-radius: 6px;
+  padding: 35px 75px; }
+  .btn-card.btn-simple {
+    padding: 34px 74px; }
+
 .btn-wd {
   min-width: 140px; }
 
@@ -1422,6 +1429,62 @@ textarea.form-control {
 .form-horizontal .form-check-inline {
   margin-top: 6px; }
 
+/* Customize the label (the container) */
+.configs {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; }
+
+/* Hide the browser's default radio button */
+.configs input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0; }
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eee;
+  border-radius: 50%; }
+
+/* On mouse-over, add a grey background color */
+.configs:hover input ~ .checkmark {
+  background-color: #ccc; }
+
+/* When the radio button is checked, add a blue background */
+.configs input:checked ~ .checkmark {
+  background-color: #44c47d; }
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none; }
+
+/* Show the indicator (dot/circle) when checked */
+.configs input:checked ~ .checkmark:after {
+  display: block; }
+
+/* Style the indicator (dot/circle) */
+.configs .checkmark:after {
+  top: 9px;
+  left: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white; }
+
 button,
 input,
 optgroup,
@@ -1554,8 +1617,6 @@ a.text-gray:focus, a.text-gray:hover {
     color: #FFFFFF; }
     .blockquote.blockquote-white small {
       color: rgba(255, 255, 255, 0.8); }
-
-
 
 body {
   color: #2c2c2c;
@@ -1884,7 +1945,7 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
     font-size: 1em;
     font-weight: 400; }
   .navbar.navbar-absolute {
-    position: absolute;
+    position: sticky;
     width: 100%;
     padding-top: 10px;
     z-index: 1029; }
@@ -1973,7 +2034,7 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
   .navbar .button-dropdown .navbar-toggler-bar:nth-child(2) {
     width: 17px; }
   .navbar.navbar-transparent {
-    background-color: transparent !important;
+    background-color: #f4f3ef !important;
     box-shadow: none;
     border-bottom: 1px solid #ddd; }
     .navbar.navbar-transparent a:not(.dropdown-item):not(.btn) {
@@ -2135,21 +2196,21 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
   .dropdown.show .dropdown-menu[x-placement="top-start"],
   .dropup.show .dropdown-menu[x-placement="top-start"],
   .bootstrap-select.show .dropdown-menu[x-placement="top-start"] {
-    -webkit-transform: translate3d(-20px, -260px, 0) !important;
-    -moz-transform: translate3d(-20px, -260px, 0) !important;
-    -o-transform: translate3d(-20px, -260px, 0) !important;
-    -ms-transform: translate3d(-20px, -260px, 0) !important;
-    transform: translate3d(-20px, -260px, 0) !important;
+    -webkit-transform: translate3d(-20px, -50px, 0) !important;
+    -moz-transform: translate3d(-20px, -50px, 0) !important;
+    -o-transform: translate3d(-20px, -50px, 0) !important;
+    -ms-transform: translate3d(-20px, -50px, 0) !important;
+    transform: translate3d(-20px, -50px, 0) !important;
     top: auto !important;
     bottom: 0 !important; }
   .dropdown.show .dropdown-menu[x-placement="bottom-start"],
   .dropup.show .dropdown-menu[x-placement="bottom-start"],
   .bootstrap-select.show .dropdown-menu[x-placement="bottom-start"] {
-    -webkit-transform: translate3d(-20px, 260px, 0) !important;
-    -moz-transform: translate3d(-20px, 260px, 0) !important;
-    -o-transform: translate3d(-20px, 260px, 0) !important;
-    -ms-transform: translate3d(-20px, 260px, 0) !important;
-    transform: translate3d(-20px, 260px, 0) !important;
+    -webkit-transform: translate3d(-20px, 50px, 0) !important;
+    -moz-transform: translate3d(-20px, 50px, 0) !important;
+    -o-transform: translate3d(-20px, 50px, 0) !important;
+    -ms-transform: translate3d(-20px, 50px, 0) !important;
+    transform: translate3d(-20px, 50px, 0) !important;
     bottom: auto !important;
     top: 0 !important; }
 
@@ -2535,6 +2596,29 @@ img {
 .img-raised {
   box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.3); }
 
+.img-about {
+  box-shadow: 0px 10px 25px 0px rgba(0, 0, 0, 0.3);
+  /* border-radius: 50%; */
+  object-fit: cover;
+  height: auto;
+  max-height: 400px;
+  width: auto; }
+
+/* Fixed size piece of code if needed in the future */
+.img-about-div {
+  width: 60px;
+  height: 60px;
+  -webkit-border-radius: 60px;
+  -webkit-background-clip: padding-box;
+  -moz-border-radius: 60px;
+  -moz-background-clip: padding;
+  border-radius: 60px;
+  background-clip: padding-box;
+  margin: 7px 0 0 5px;
+  float: left;
+  background-size: cover;
+  background-position: center center; }
+
 /*--------------------------------
 
 nucleo-icons Web Font - built using nucleoapp.com
@@ -2543,8 +2627,8 @@ License - nucleoapp.com/license/
 -------------------------------- */
 @font-face {
   font-family: 'nucleo-icons';
-  src: url("../fonts/nucleo-icons.eot");
-  src: url("../fonts/nucleo-icons.eot") format("embedded-opentype"), url("../fonts/nucleo-icons.woff2") format("woff2"), url("../fonts/nucleo-icons.woff") format("woff"), url("../fonts/nucleo-icons.ttf") format("truetype");
+  src: url("../../fonts/nucleo-icons.eot");
+  src: url("../../fonts/nucleo-icons.eot") format("embedded-opentype"), url("../../fonts/nucleo-icons.woff2") format("woff2"), url("../../fonts/nucleo-icons.woff") format("woff"), url("../../fonts/nucleo-icons.ttf") format("truetype");
   font-weight: normal;
   font-style: normal; }
 
@@ -3032,7 +3116,6 @@ License - nucleoapp.com/license/
   font-size: 14px;
   font-weight: 700;
   padding-bottom: 0;
-  text-transform: uppercase;
   border: 0; }
 
 .table .radio,
@@ -3148,15 +3231,32 @@ License - nucleoapp.com/license/
   width: 260px;
   left: 0;
   z-index: 1030;
-  border-right: 1px solid #ddd; }
+  /* width */
+  /* Track */
+  /* Handle */
+  /* Handle on hover */ }
+  .sidebar ::-webkit-scrollbar,
+  .off-canvas-sidebar ::-webkit-scrollbar {
+    width: 5px; }
+  .sidebar ::-webkit-scrollbar-track,
+  .off-canvas-sidebar ::-webkit-scrollbar-track {
+    background: #212120; }
+  .sidebar ::-webkit-scrollbar-thumb,
+  .off-canvas-sidebar ::-webkit-scrollbar-thumb {
+    background: #44c47d;
+    border-radius: 10px; }
+  .sidebar ::-webkit-scrollbar-thumb:hover,
+  .off-canvas-sidebar ::-webkit-scrollbar-thumb:hover {
+    background: #44c47d; }
   .sidebar .sidebar-wrapper,
   .off-canvas-sidebar .sidebar-wrapper {
     position: relative;
     height: calc(100vh - 75px);
     overflow: auto;
+    overflow-x: hidden;
     width: 260px;
     z-index: 4;
-    padding-bottom: 300px; }
+    padding-bottom: 100px; }
     .sidebar .sidebar-wrapper .dropdown .dropdown-backdrop,
     .off-canvas-sidebar .sidebar-wrapper .dropdown .dropdown-backdrop {
       display: none !important; }
@@ -3201,7 +3301,7 @@ License - nucleoapp.com/license/
       display: block;
       text-decoration: none;
       position: relative;
-      
+      text-transform: uppercase;
       cursor: pointer;
       font-size: 12px;
       padding: 10px 8px;
@@ -3483,7 +3583,7 @@ License - nucleoapp.com/license/
   .main-panel > .content {
     padding: 0 30px 30px;
     min-height: calc(100vh - 123px);
-    margin-top: 93px; }
+    margin-top: 15px; }
   .main-panel > .navbar {
     margin-bottom: 0; }
   .main-panel .header {
@@ -3842,10 +3942,6 @@ License - nucleoapp.com/license/
     text-align: center;
     font-weight: 500;
     padding-bottom: 15px; }
-  .card label {
-    font-size: 0.8571em;
-    margin-bottom: 5px;
-    color: #9A9A9A; }
   .card .card-footer {
     background-color: transparent;
     border: 0; }
@@ -3947,9 +4043,6 @@ License - nucleoapp.com/license/
   margin-bottom: 6px;
   text-align: center; }
 
-.map {
-  height: 500px; }
-
 .card-stats .card-body {
   padding: 15px 15px 0px; }
   .card-stats .card-body .numbers {
@@ -3976,9 +4069,138 @@ License - nucleoapp.com/license/
   .card-stats .icon-big i {
     line-height: 59px; }
 
+.card-button {
+  cursor: pointer;
+  color: white;
+  background-color: #6bd098; }
+  .card-button .card-body {
+    padding: 15px 15px 0px; }
+    .card-button .card-body .numbers {
+      text-align: center;
+      padding-top: 10px;
+      font-size: 2em; }
+      .card-button .card-body .numbers p {
+        margin-bottom: 0;
+        color: white; }
+      .card-button .card-body .numbers .card-category {
+        color: white;
+        font-size: 16px;
+        line-height: 1.4em; }
+  .card-button .card-footer {
+    padding: 0px 15px 15px; }
+    .card-button .card-footer .stats {
+      color: white; }
+    .card-button .card-footer hr {
+      margin-top: 10px;
+      margin-bottom: 15px; }
+  .card-button .icon-big {
+    font-size: 3em;
+    min-height: 64px; }
+    .card-button .icon-big i {
+      line-height: 59px; }
+
+.card-button:hover {
+  filter: brightness(110%); }
+
+.card-method {
+  border-radius: 12px;
+  box-shadow: 0 0px 0px 0px rgba(0, 0, 0, 0.15);
+  background-color: #FFFFFF;
+  color: #252422;
+  margin-bottom: 20px;
+  position: relative;
+  border: 0px solid #6bd098;
+  -webkit-transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 200ms ease;
+  -moz-transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 200ms ease;
+  -o-transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 200ms ease;
+  -ms-transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 200ms ease;
+  transition: transform 300ms cubic-bezier(0.34, 2, 0.6, 1), box-shadow 200ms ease; }
+  .card-method .card-body {
+    padding: 15px 15px 10px 15px; }
+    .card-method .card-body.table-full-width {
+      padding-left: 0;
+      padding-right: 0; }
+  .card-method .card-header {
+    padding: 15px 15px 0;
+    border: 0; }
+    .card-method .card-header:not([data-background-color]) {
+      background-color: transparent; }
+    .card-method .card-header .card-title {
+      margin-top: 10px; }
+  .card-method .map {
+    border-radius: 3px; }
+    .card-method .map.map-big {
+      height: 400px; }
+  .card-method[data-background-color="orange"] {
+    background-color: #51cbce; }
+    .card-method[data-background-color="orange"] .card-header {
+      background-color: #51cbce; }
+    .card-method[data-background-color="orange"] .card-footer .stats {
+      color: #FFFFFF; }
+  .card-method[data-background-color="red"] {
+    background-color: #ef8157; }
+  .card-method[data-background-color="yellow"] {
+    background-color: #fbc658; }
+  .card-method[data-background-color="blue"] {
+    background-color: #51bcda; }
+  .card-method[data-background-color="green"] {
+    background-color: #6bd098; }
+  .card-method .image {
+    overflow: hidden;
+    height: 200px;
+    position: relative; }
+  .card-method .avatar {
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-bottom: 15px; }
+  .card-method .numbers {
+    font-size: 2em; }
+  .card-method .big-title {
+    font-size: 12px;
+    text-align: center;
+    font-weight: 500;
+    padding-bottom: 15px; }
+  .card-method label {
+    font-size: 0.8571em;
+    margin-bottom: 5px;
+    color: #9A9A9A; }
+  .card-method .card-footer {
+    background-color: transparent;
+    border: 0; }
+    .card-method .card-footer .stats i {
+      margin-right: 5px;
+      position: relative;
+      top: 0px;
+      color: #66615B; }
+    .card-method .card-footer .btn {
+      margin: 0; }
+  .card-method.card-plain {
+    background-color: transparent;
+    box-shadow: none;
+    border-radius: 0; }
+    .card-method.card-plain .card-body {
+      padding-left: 5px;
+      padding-right: 5px; }
+    .card-method.card-plain img {
+      border-radius: 12px; }
+  .card-method .btn:hover, .card-method .btn:focus {
+    background-color: #6bd098 !important; }
+  .card-method .btn:active, .card-method .btn.active {
+    background-color: #44c47d !important; }
+  .card-method.selected {
+    box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.15); }
+    .card-method.selected .btn {
+      background-color: #44c47d !important; }
+
+.card-method:hover {
+  box-shadow: 10px 10px 10px 0px rgba(0, 0, 0, 0.15); }
+  .card-method:hover .btn {
+    background-color: #6bd098; }
+
 @media screen and (max-width: 991px) {
   .navbar {
-    position: absolute;
     padding: 0; }
     .navbar.navbar-absolute {
       padding-top: 0; }
@@ -3993,7 +4215,7 @@ License - nucleoapp.com/license/
     display: none; }
   .navbar .container-fluid {
     padding-right: 15px;
-    padding-left: 10px; }
+    padding-left: 15px; }
   .navbar .navbar-collapse .input-group {
     margin: 0;
     margin-top: 5px; }
@@ -4066,7 +4288,7 @@ License - nucleoapp.com/license/
     transform: translate3d(0px, 0, 0); }
   .nav-open body {
     position: relative;
-    overflow-x: auto; }
+    overflow-x: hidden; }
   .nav-open .menu-on-right .main-panel {
     -webkit-transform: translate3d(-260px, 0, 0);
     -moz-transform: translate3d(-260px, 0, 0);
@@ -4406,6 +4628,8 @@ License - nucleoapp.com/license/
 @media screen and (max-width: 768px) {
   .card-stats [class*="col-"] .statistics::after {
     display: none; }
+  .card-button [class*="col-"] .statistics::after {
+    display: none; }
   .main-panel .content {
     padding-left: 15px;
     padding-right: 15px; }
@@ -4461,6 +4685,12 @@ License - nucleoapp.com/license/
   .card-contributions .card-stats {
     flex-direction: column; }
     .card-contributions .card-stats .bootstrap-switch {
+      margin-bottom: 15px; }
+  .footer .copyright {
+    text-align: center; }
+  .card-contributions .card-button {
+    flex-direction: column; }
+    .card-contributions .card-button .bootstrap-switch {
       margin-bottom: 15px; }
   .footer .copyright {
     text-align: center; }
@@ -4749,8 +4979,8 @@ License - nucleoapp.com/license/
 -------------------------------- */
 @font-face {
   font-family: 'nucleo-icons';
-  src: url("../fonts/nucleo-icons.eot");
-  src: url("../fonts/nucleo-icons.eot") format("embedded-opentype"), url("../fonts/nucleo-icons.woff2") format("woff2"), url("../fonts/nucleo-icons.woff") format("woff"), url("../fonts/nucleo-icons.ttf");
+  src: url("../../../../fonts/nucleo-icons.eot");
+  src: url("../../../../fonts/nucleo-icons.eot") format("embedded-opentype"), url("../../../../fonts/nucleo-icons.woff2") format("woff2"), url("../../../../fonts/nucleo-icons.woff") format("woff"), url("../../../../fonts/nucleo-icons.ttf");
   font-weight: normal;
   font-style: normal; }
 
