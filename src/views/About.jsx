@@ -39,9 +39,14 @@ function About() {
                                     efs-assembler available in the GitHub repository https://github.com/colombelli/efs-assembler.
                 </p>
                                 <p>
-                                    Additional information about our investigations can be found in the following paper:
-                                    *cite paper here*
-                </p>
+                                    If you have scientific interests or want to use BioSelector in formal reports, we kindly ask
+                                    you to cite us in your publication: </p>
+                                    <p>
+                                    <i>F. Colombelli, T. W. Kowalski, M. Recamonde-Mendoza, A hybrid ensemble feature selection design for candidate biomarkers discovery from transcriptome profiles, 2021.arXiv:2108.00290.</i>
+                                    </p>
+                                    <p>
+                                    Additional information about our investigations can be found in the same paper.
+                                    </p>
                                 <p>
                                     The study that culminated in BioSelector was financed in part by the Coordenação de Aperfeiçoamento de
                                     Pessoal de Nível Superior - Brasil (CAPES) - Finance Code 001, Conselho Nacional de Desenvolvimento
