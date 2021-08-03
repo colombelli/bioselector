@@ -1,60 +1,135 @@
 {
-  "name": "bioselector",
-  "homepage": ".",
-  "productName": "BioSelector",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "bootstrap": "4.3.1",
-    "history": "4.9.0",
-    "jquery": "^3.5.1",
-    "node-sass": "4.12.0",
-    "perfect-scrollbar": "1.4.0",
-    "python-shell": "^1.0.8",
-    "react": "^16.10.2",
-    "react-dom": "^16.10.2",
-    "react-hook-form": "^5.7.2",
-    "react-notification-alert": "0.0.12",
-    "react-router-dom": "5.0.0",
-    "react-scripts": "3.4.4",
-    "reactstrap": "8.0.0"
-  },
-  "scripts": {
-    "react-start": "BROWSER=NONE react-scripts start",
-    "electron-start": "DEV=1 electron .",
-    "start": "concurrently 'npm run react-start' 'wait-on http://localhost:3000/ && npm run electron-start'",
-    "build": "rm -rf build/ && react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
-    "compile-sass": "node-sass src/assets/scss/paper-dashboard.scss src/assets/css/paper-dashboard.css",
-    "minify-sass": "node-sass src/assets/scss/paper-dashboard.scss src/assets/css/paper-dashboard.min.css --output-style compressed",
-    "map-sass": "node-sass src/assets/scss/paper-dashboard.scss src/assets/css/paper-dashboard.css --source-map true",
-    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=src/assets/img/icons/bioselector_icon.icns --prune=true --out=release-builds",
-    "package-windows": "electron-packager . bioselector --overwrite --asar --platform=win32 --arch=ia32 --icon=src/assets/img/icons/bioselector_icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"BioSelector\"",
-    "package-linux": "electron-packager . bioselector --overwrite --asar --platform=linux --arch=x64 --icon=src/assets/img/icons/bioselector_icon.png --prune=true --out=release-builds"
-  },
-  "main": "public/electron.js",
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not ie <= 11",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "concurrently": "^5.0.0",
-    "electron": "^6.1.12",
-    "electron-packager": "^15.3.0",
-    "wait-on": "^3.3.0"
-  }
+    "name": "bioselector",
+    "author": "Felipe Colombelli",
+    "description": "Application powered by machine learning for biomarker discovery.",
+    "homepage": ".",
+    "productName": "BioSelector",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "bootstrap": "4.3.1",
+        "history": "4.9.0",
+        "jquery": "^3.5.1",
+        "node-sass": "4.12.0",
+        "perfect-scrollbar": "1.4.0",
+        "python-shell": "^1.0.8",
+        "react": "^16.10.2",
+        "react-dom": "^16.10.2",
+        "react-hook-form": "^5.7.2",
+        "react-notification-alert": "0.0.12",
+        "react-router-dom": "5.0.0",
+        "react-scripts": "3.4.4",
+        "reactstrap": "8.0.0"
+    },
+    "scripts": {
+        "react-start": "BROWSER=NONE react-scripts start",
+        "electron-start": "DEV=1 electron .",
+        "start": "concurrently 'npm run react-start' 'wait-on http://localhost:3000/ && npm run electron-start'",
+        "build": "rm -rf build/ && react-scripts build",
+        "test": "react-scripts test",
+        "eject": "react-scripts eject",
+        "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
+        "compile-sass": "node-sass src/assets/scss/paper-dashboard.scss src/assets/css/paper-dashboard.css",
+        "minify-sass": "node-sass src/assets/scss/paper-dashboard.scss src/assets/css/paper-dashboard.min.css --output-style compressed",
+        "map-sass": "node-sass src/assets/scss/paper-dashboard.scss src/assets/css/paper-dashboard.css --source-map true",
+        "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=src/assets/img/icons/bioselector_icon.icns --prune=true --out=release-builds",
+        "package-windows": "electron-packager . bioselector --overwrite --asar --platform=win32 --arch=ia32 --icon=src/assets/img/icons/bioselector_icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"BioSelector\"",
+        "package-linux": "electron-packager . bioselector --overwrite --asar --platform=linux --arch=x64 --icon=src/assets/img/icons/bioselector_icon.png --prune=true --out=release-builds",
+        "pack": "electron-builder --dir",
+        "dist_mac": "electron-builder --macos",
+        "dist_win": "electron-builder --win --x64",
+        "dist_linux": "electron-builder --linux --x64"
+    },
+    "main": "public/electron.js",
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not ie <= 11",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "devDependencies": {
+        "concurrently": "^5.0.0",
+        "electron": "^6.1.12",
+        "electron-packager": "^15.3.0",
+        "electron-builder": "^22.7.0",
+        "wait-on": "^3.3.0"
+    },
+    "build": {
+        "appId": "colombelli.bioselector.efsassembler",
+        "productName": "BioSelector",
+        "copyright": "Copyright © 2021 Felipe Colombelli",
+        "files": [
+            "**/*",
+            "src/assets/*",
+            "!**/node_modules/*/{CHANGELOG.md,README.md,README,readme.md,readme}",
+            "!**/node_modules/*/{test,__tests__,tests,powered-test,example,examples}",
+            "!**/node_modules/*.d.ts",
+            "!**/node_modules/.bin",
+            "!**/*.{iml,o,hprof,orig,pyc,pyo,rbc,swp,csproj,sln,xproj}",
+            "!.editorconfig",
+            "!**/._*",
+            "!**/{.DS_Store,.git,.hg,.svn,CVS,RCS,SCCS,.gitignore,.gitattributes}",
+            "!**/{__pycache__,thumbs.db,.flowconfig,.idea,.vs,.nyc_output}",
+            "!**/{appveyor.yml,.travis.yml,circle.yml}",
+            "!**/{npm-debug.log,yarn.lock,.yarn-integrity,.yarn-metadata.json}"
+        ],
+        "extraResources": [
+            {
+                "from": "../env",
+                "to": "env",
+                "filter": [
+                    "**/*",
+                    "!*.pyc",
+                    "!conda-meta${/*}"
+                ]
+            }
+        ],
+        "asar": false,
+        "directories": {
+            "buildResources": "src/assets/",
+            "output": "dist"
+        },
+        "fileAssociations": [
+            {
+                "ext": "bsl",
+                "name": "Bioselector Project File",
+                "description": "Bioselector Project File",
+                "icon": "public/favicon.ico"
+            }
+        ],
+        "linux": {
+            "category": "Utility",
+            "synopsis": "Application powered by machine learning for biomarker discovery.",
+            "target": [
+                "deb",
+                "snap",
+                "rpm",
+                "appImage"
+            ]
+        },
+        "dmg": {
+            "contents": [
+                {
+                    "x": 110,
+                    "y": 150
+                },
+                {
+                    "x": 240,
+                    "y": 150,
+                    "type": "link",
+                    "path": "/Applications"
+                }
+            ]
+        }
+    }
 }
