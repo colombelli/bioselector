@@ -56,9 +56,18 @@ Change the directory to bioselector and run the package.json script **start**:
     $ npm run start
 
 
-## Usage demonstration
+## Usage
 
-[![BioSelector Demonstration](https://yt-embed.herokuapp.com/embed?v=AK1osfRe86Q)](https://youtu.be/AK1osfRe86Q "Usage Demonstration")
+* For information about the supported **datasets** format and other charcteristics, read [this](https://github.com/colombelli/efs-assembler#datasets-expected-format)
+* For information about the **results** folder structure and explanation about the generated files and folders, read [this](https://github.com/colombelli/efs-assembler#results-folder-structure)
+* For information about the constraints surrounding the addition of **new feature selection algorithms**, read [this](https://github.com/colombelli/efs-assembler#rules-for-new-feature-selection-algorithms)
+* For information about the constraints surrounding the addition of **new aggregation algorithms**, read [this](https://github.com/colombelli/efs-assembler#rules-for-new-aggregation-algorithms)
+
+
+
+## Demonstration
+
+[![BioSelector Demonstration](https://yt-embed.herokuapp.com/embed?v=AK1osfRe86Q)](https://youtu.be/AK1osfRe86Q "Demonstration")
 
 
 ## BibTeX entry
