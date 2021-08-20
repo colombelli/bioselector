@@ -83,6 +83,11 @@ Change the directory to bioselector and run the package.json script **start**:
 }
 ```
 
+## Acknowledgement
+
+This project was financed in part by the Coordenação de Aperfeiçoamento de Pessoal de Nível Superior - Brasil (CAPES) - Finance Code 001, Conselho Nacional de Desenvolvimento Científico e Tecnológico (project CNPq/AWS 032/2019, process no. 440005/2020-5), and Fundação de Amparo à Pesquisa do Estado do Rio Grande do Sul (FAPERGS).
+
+
 [creative-tim]: https://www.creative-tim.com/
 [tcga]: https://www.cancer.gov/about-nci/organization/ccg/research/structural-genomics/tcga
 [arrayexpress]: https://www.ebi.ac.uk/arrayexpress/
