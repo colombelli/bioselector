@@ -14,6 +14,7 @@ required one, we still didn't investigated its potential beyond gene expression 
 The application is part of a scientific ongoing study investigating Ensemble Feature Selection for biomarker discovery out of 
 RNA-seq and Microarray datasets provided by [TCGA][tcga] and [ArrayExpress][arrayexpress]. If you have scientific interests or want to use our package in formal reports, we kindly ask you to cite us in your publication: [F. Colombelli, T. W. Kowalski, M. Recamonde-Mendoza, A hybrid ensemble feature selection design for candidate biomarkers discovery from transcriptome profiles, 2021.arXiv:2108.00290.](#bibtex-entry)
 
+This work was developed at the Institute of Informatics, Universidade Federal do Rio Grande do Sul and Bioinformatics Core, Hospital de Clínicas de Porto Alegre.
 
 ## Current Stage
 
