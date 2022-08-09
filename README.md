@@ -44,7 +44,7 @@ On Linux systems run the installation node script:
         
     $ npm run install:clean
 
-On Windows and macOS systems, delete the `node_modules` folder and run the node installation command:
+On Windows and macOS systems, delete the `node_modules` folder (if present from previous installation attempts) and run the node installation command:
         
     $ npm install
 
