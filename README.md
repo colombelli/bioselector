@@ -11,8 +11,8 @@ BioSelector is a cross-platform application powered by machine learning that pro
 techniques for biomarker discovery. Even though different domain problems could benefit from it if the dataset model fits the
 required one, we still didn't investigated its potential beyond gene expression data.
 
-The application is part of a scientific ongoing study investigating Ensemble Feature Selection for biomarker discovery out of 
-RNA-seq and Microarray datasets provided by [TCGA][tcga] and [ArrayExpress][arrayexpress]. If you have scientific interests or want to use our package in formal reports, we kindly ask you to cite us in your publication: [F. Colombelli, T. W. Kowalski, M. Recamonde-Mendoza, A hybrid ensemble feature selection design for candidate biomarkers discovery from transcriptome profiles, 2021.arXiv:2108.00290.](#bibtex-entry)
+The application is part of a scientific study that investigated Ensemble Feature Selection for biomarker discovery out of 
+RNA-seq and Microarray datasets provided by [TCGA][tcga] and [ArrayExpress][arrayexpress]. If you have scientific interests or want to use our package in formal reports, we kindly ask you to cite us in your publication: [Colombelli, F., Kowalski, T.W. and Recamonde-Mendoza, M., 2022. A hybrid ensemble feature selection design for candidate biomarkers discovery from transcriptome profiles. Knowledge-Based Systems, 254, p.109655.](#bibtex-entry)
 
 This work was developed at the Institute of Informatics, Universidade Federal do Rio Grande do Sul and Bioinformatics Core, Hospital de Clínicas de Porto Alegre.
 
@@ -74,9 +74,10 @@ Change the directory to bioselector and run the package.json script **start**:
 ## BibTeX entry
 
 ```
-@article{colombelli2022hybrid,
+@article{COLOMBELLI2022109655,
 title = {A hybrid ensemble feature selection design for candidate biomarkers discovery from transcriptome profiles},
 journal = {Knowledge-Based Systems},
+volume = {254},
 pages = {109655},
 year = {2022},
 issn = {0950-7051},
