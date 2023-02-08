@@ -22,7 +22,7 @@ Right now, the application is at an early stage development and its MVP was only
 The application was built using Electron backended by Python/R/Rcpp and frontended with React framework utilizing a
 template provided freely by [Creative Tim][creative-tim].
 
-After more testing and a formal paper submission, this README will be updated with a detailed usage and installation guide. 
+After more testing, this README will be updated with a detailed usage and installation guide. 
 
 
 ## Screenshots
